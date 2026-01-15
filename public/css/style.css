@@ -1,0 +1,233 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+::selection {
+    background-color: rgb(142, 76, 21);
+    color: #fff;
+}
+
+body {
+direction: rtl;
+    height: 100vh;
+    font-family: "Tajawal", sans-serif !important;
+    background: #fff url(../header_footer/body.png) repeat-x right bottom;
+
+}
+
+
+ header, nav, section, summary {
+    display: block;
+}
+
+
+.header-two .header-top {
+    padding: 10px;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    border-bottom: 1px solid #f6f0e6;
+  background: #fff url("../header_footer/04.a319d53a.png") repeat-y right;
+background-size: contain;
+}
+
+
+
+
+.header-two .header-top .content {
+    max-width: 1320px;
+    margin: 0 auto;
+    display: flex;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; 
+    align-items: center;
+    width: 98%;
+}
+
+.header-two .header-top .content .left-header-top p {
+    font-size: 16px;
+    color: #fff;
+}
+p:last-child {
+    margin-bottom: 0;
+}
+.header-two .header-top .content .right-header-top {
+    display: flex;
+    align-items: center;
+}
+
+.header-two .header-top .content .right-header-top .ht-social {
+    display: flex;
+    align-items: center;
+    margin-left: 60px;
+    position: relative;
+}
+
+.header-two .header-top::after {
+    position: absolute;
+    left: -5%;
+    content: "";
+    top: 0;
+    width: 40%;
+    height: 100%;
+    background: #f6f0e6 ;
+    z-index: -1;
+}
+
+main {
+ 
+}
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #f6f0e6;
+    font-size: 13px;
+    padding: 10px;
+    color: #8e4c15;
+}
+
+.text-brown {
+    color: rgb(142, 76, 21);
+}
+
+.w-logo {
+    width: 100px;
+}
+
+.bg-form {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.bg-baige {
+    background-color: rgb(245, 242, 239);
+}
+
+.color-icon {
+    color: #630;
+}
+
+.background-skewed {
+    position: relative;
+    display: inline-block;
+    padding: 10px 20px;
+    background: #e7dac2;
+    transform: skew(-10deg);
+    margin: 20px auto;
+
+}
+
+.form-control,
+.form-select,
+.file-upload {
+    border: 2px solid #8e4c15;
+}
+
+.form-control:focus,
+.form-select:focus,
+.form-check-input:focus,
+.file-upload:focus {
+    color: var(--bs-body-color);
+    background-color: var(--bs-body-bg);
+    border-color: #dbb106;
+    outline: 0;
+    box-shadow: 0 0 0 .25rem rgba(231, 218, 194, .25);
+}
+
+.form-select {
+
+    background-position: left .75rem center;
+}
+
+.form-check-input:checked {
+    background-color: #8e4c15;
+    border-color: #8e4c15;
+}
+.bg-brown {
+    background-color: #8e4c15;
+    border-color: #8e4c15;
+}
+.btn-brown {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #8e4c15;
+    --bs-btn-border-color: #8e4c15;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #8e4c15;
+    --bs-btn-hover-border-color: #8e4c15;
+    --bs-btn-focus-shadow-rgb: 49, 132, 253;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #8e4c15;
+    --bs-btn-active-border-color: #8e4c15;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: #8e4c15;
+    --bs-btn-disabled-border-color: #8e4c15;
+
+}
+
+.btn:hover {
+    color: #fff;
+    background-color: #a05a20;
+    border-color: #a05a20;
+}
+
+@media (min-width:300px) {
+    main {
+        margin: 50px auto auto;
+        padding: 20px 10px 70px;
+        height: auto;
+    }
+
+    .title {
+        display: none;
+    }
+
+    .form-title {
+        font-size: 16px;
+    }
+
+    .gender-margin {
+        margin-bottom: 12px;
+    }
+}
+
+@media (min-width:768px) {
+    main {
+        margin: auto;
+        padding: 30px 10px 50px;
+      
+    }
+
+    .title {
+        display: block;
+        font-size: 20px;
+
+    }
+
+    .date-size {
+        font-size: 15px;
+    }
+
+    .form-title {
+        font-size: 20px;
+    }
+
+    .gender-margin {
+        margin-bottom: auto;
+    }
+}
+
+@media (min-width:1200px) {
+    .title {
+        display: block;
+        font-size: 22px;
+    }
+
+    .date-size {
+        font-size: 16px;
+    }
+}
