@@ -17,8 +17,8 @@ function getDataPrint(url) {
         success: function (html) {
             $('#pr').html(html).show();
             $('#pr').hide();
-            printDiv('pr')
             loader.style.display = 'none';
+            printDiv('pr')
 
         }
     });
