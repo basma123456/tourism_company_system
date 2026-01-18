@@ -45,6 +45,7 @@ Route::group([
     Route::resource('invoices'   , InvoiceController::class )->except('show');
     Route::post('getmsg/{id}' , [InvoiceController::class , 'printAndGetData']);
 
+    Route::post('invoice_all' , [InvoiceController::class , 'getAllData']);
     Route::get('fff' , function (){
       return  view('admin/invoices/print');
     } );
