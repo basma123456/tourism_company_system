@@ -20,7 +20,7 @@ class AirLineController extends Controller
                 $q->where('name' , 'like' , "%" . $request->search . "%")->orWhere('symbol' , 'like' , "%" . $request->search . "%")->orWhere('code' ,     $request->search  );
             });
         }
-        $airlines = $query->latest()->get();
+        $airlines = $query->latest()->paginate(config('app.pagination_num'))->appends($request->query());
         return view('admin/airlines/index' , compact('airlines'));
     }
 
@@ -53,5 +53,23 @@ class AirLineController extends Controller
         $airline->delete();
         return redirect(route('admin.airlines.index'))->with(['success' => 'lang.you have deleted  airline successfully']);
     }
+
+
+
+
+    //  used in ajax for print data
+    public function getAllData(Request $request)
+    {
+        $query = Airline::query();
+        if($request->filled('search')){
+            $query->where( function ($q) use ($request){
+                $q->where('name' , 'like' , "%" . $request->search . "%")->orWhere('symbol' , 'like' , "%" . $request->search . "%")->orWhere('code' ,     $request->search  );
+            });
+        }
+        $airlines = $query->latest()->get();
+        return view('admin.airlines.print', compact('airlines'));
+
+    }
+
 
 }

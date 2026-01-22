@@ -54,7 +54,7 @@ class TourismFileController extends Controller
         }
 
 
-        $tourismFiles = $query->with('country')->latest()->get();
+        $tourismFiles = $query->with('country' , 'type')->latest()->paginate(config('app.pagination_num') )->appends($request->query());
         $clients = Client::select('id', 'name')->get();
         $countries = Country::select('id', 'country_code', 'country_name', 'country_name_ar')->get();
         $country_name = app()->getLocale() == 'ar' ? 'country_name_ar' : 'country_name';
@@ -144,6 +144,56 @@ class TourismFileController extends Controller
     {
         $TourismFile->delete();
         return redirect(route('admin.tourism_files.index'))->with(['success' => 'lang.you have deleted  tourismFile successfully']);
+    }
+
+
+
+
+    //  used in ajax for print data
+    public function getAllData(Request $request)
+    {
+        $query = TourismFile::query();
+        if ($request->filled('search')) {
+            $query->where(function ($q) use ($request) {
+                $q->where('Fcode', 'like', "%" . $request->search . "%")
+                    ->orWhere('Fname', 'like', "%" . $request->search . "%")
+                    ->orWhere('adults_no', $request->search)
+                    ->orWhere('child_no', $request->search)
+                    ->orWhere('infants_no', $request->search);
+            });
+        }
+
+        if ($request->filled('date')) {
+            $query->where(function ($q) use ($request) {
+                $q->whereDate('arrival_date', $request->date)
+                    ->orWhereDate('leave_date', $request->date)
+                    ->orWhereDate('created_date', $request->date);
+            });
+        }
+        if ($request->filled('type')) {
+            $query->where('Ftype', $request->type);
+        }
+
+        if ($request->filled('client')) {
+            $query->where('emp', $request->client);
+        }
+        if ($request->filled('country')) {
+            $query->where('nationality', $request->country);
+        }
+
+        if ($request->filled('closed') && $request->closed == 1) {
+            $query->where('closed', 1);
+        }
+
+        if ($request->filled('approved') && $request->approved == 1) {
+            $query->where('approved', 1);
+        }
+
+
+        $tourismFiles = $query->with('country' , 'type')->latest()->get();
+        $country_name = app()->getLocale() == 'ar' ? 'country_name_ar' : 'country_name';
+        return view('admin.tourism_files.print', compact('tourismFiles' , 'country_name'));
+
     }
 
 

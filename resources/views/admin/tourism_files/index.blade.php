@@ -36,7 +36,17 @@
 
 
                     {{--/**********excel btn**********/--}}
-                    <span title="اكسيل" onclick="exportDivToExcel('pr', 'final_report.xlsx')"
+                    <span title="اكسيل"
+                          onclick="getDataExcel('{{url('admin/tourism_files_all' )}}', 'tourism_files.xlsx' ,
+                              {
+                              search : '{{request()->search}}'
+                              ,date : '{{request()->date}}'
+                              ,type : '{{request()->type}}'
+                              , client : '{{request()->client}}'
+                              ,  closed : '{{request()->closed}}'
+                              , country : '{{request()->country}}'
+                              , approved : '{{request()->approved}}'
+                              })"
                           target="_blank"
                           class="btn btn-sm btn-success  ">
                         <i class="ri-file-excel-line"></i>
@@ -44,7 +54,15 @@
 
                     {{--/*********excel brn**********/--}}
 
-                    <span title="طباعة" onclick="printDiv('pr')" class="btn btn-sm btn-danger  ">
+                    <span title="طباعة" onclick="getDataPrint('{{url('admin/tourism_files_all' )}}' , {
+                        search : '{{request()->search}}'
+                        ,date : '{{request()->date}}'
+                        ,type : '{{request()->type}}'
+                        , client : '{{request()->client}}'
+                        ,  closed : '{{request()->closed}}'
+                        , country : '{{request()->country}}'
+                        , approved : '{{request()->approved}}'
+                        })" class="btn btn-sm btn-danger  ">
                             <i class="ri-printer-line"></i>
                         </span>
 
@@ -79,36 +97,39 @@
                                 <select class="form-control select2" name="client" data-toggle="select2">
                                     <option value="">{{__('lang.choose_client')}}</option>
                                     @foreach($clients as $client)
-                                        <option  {{$client->id  == request()->get('client') ? 'selected' : ''}}  value="{{$client->id}}">{{$client->name}}</option>
+                                        <option
+                                            {{$client->id  == request()->get('client') ? 'selected' : ''}}  value="{{$client->id}}">{{$client->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="col-md-3">
-                                <select class="form-control select2" name="country"   data-toggle="select2">
+                                <select class="form-control select2" name="country" data-toggle="select2">
                                     <option value="">{{__('lang.choose_country')}}</option>
                                     @foreach($countries as $country)
-                                        <option  {{$country->id  == request()->get('country') ? 'selected' : ''}} value="{{$country->id}}">{{$country->$country_name}}
+                                        <option
+                                            {{$country->id  == request()->get('country') ? 'selected' : ''}} value="{{$country->id}}">{{$country->$country_name}}
                                             ( {{$country->country_code}} )
                                         </option>
                                     @endforeach
                                 </select>
                             </div>
 
-{{--                             <div class="col-md-3">--}}
-{{--                                <select class="form-control" name="type">--}}
-{{--                                    <option value="">{{__('lang.choose_type')}}</option>--}}
-{{--                                    @foreach(\App\Enums\TourismFileTypesEnum::cases() as $country)--}}
-{{--                                        <option {{$country->value  == request()->get('type') ? 'selected' : ''}} value="{{$country->value }}">{{$country->label()}}--}}
-{{--                                         </option>--}}
-{{--                                    @endforeach--}}
-{{--                                </select>--}}
-{{--                            </div>--}}
-{{--{{dd($companyFields)}}--}}
+                            {{--                             <div class="col-md-3">--}}
+                            {{--                                <select class="form-control" name="type">--}}
+                            {{--                                    <option value="">{{__('lang.choose_type')}}</option>--}}
+                            {{--                                    @foreach(\App\Enums\TourismFileTypesEnum::cases() as $country)--}}
+                            {{--                                        <option {{$country->value  == request()->get('type') ? 'selected' : ''}} value="{{$country->value }}">{{$country->label()}}--}}
+                            {{--                                         </option>--}}
+                            {{--                                    @endforeach--}}
+                            {{--                                </select>--}}
+                            {{--                            </div>--}}
+                            {{--{{dd($companyFields)}}--}}
                             <div class="col-md-3">
                                 <select class="form-control" name="type">
                                     <option value="">{{__('lang.choose_type')}}</option>
                                     @foreach($companyFields as $item)
-                                        <option {{$item->id  == request()->get('type') ? 'selected' : ''}} value="{{$item->id }}">{{$item->name}}
+                                        <option
+                                            {{$item->id  == request()->get('type') ? 'selected' : ''}} value="{{$item->id }}">{{$item->name}}
                                         </option>
                                     @endforeach
                                 </select>
@@ -117,22 +138,24 @@
 
                             <div class="col-md-3">
 
-                            <div class="col-md-12">
-                                <div class="form-check form-switch">
+                                <div class="col-md-12">
+                                    <div class="form-check form-switch">
 
-                                    <label class="form-check-label" for="closed">{{__('lang.closed')}}</label>
-                                    <input id="closed" class="form-check-input" type="checkbox" value="1" name="closed"
-                                        {{request()->get('closed') == 1 ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="closed">{{__('lang.closed')}}</label>
+                                        <input id="closed" class="form-check-input" type="checkbox" value="1"
+                                               name="closed"
+                                            {{request()->get('closed') == 1 ? 'checked' : '' }}>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="col-md-12">
-                                <div class="form-check form-switch">
-                                <label class="form-check-label" for="approved">{{__('lang.approved')}}</label>
-                                <input class="form-check-input" id="approved" type="checkbox" value="1" name="approved"
-                                    {{request()->get('approved') == 1 ? 'checked' : '' }}>
+                                <div class="col-md-12">
+                                    <div class="form-check form-switch">
+                                        <label class="form-check-label" for="approved">{{__('lang.approved')}}</label>
+                                        <input class="form-check-input" id="approved" type="checkbox" value="1"
+                                               name="approved"
+                                            {{request()->get('approved') == 1 ? 'checked' : '' }}>
+                                    </div>
                                 </div>
-                            </div>
                             </div>
 
                             {{-- end Search Inputs --}}
@@ -217,8 +240,8 @@
 
                             @forelse($tourismFiles as $item)
                                 <tr>
-                                     <td> {{$item->Fcode}}</td>
-                                    <td> {{$item->Ftype}}</td>
+                                    <td> {{$item->Fcode}}</td>
+                                    <td> {{optional($item->type)->name}}</td>
                                     <td> {{$item->Fname}}</td>
                                     <td> {{$item->emp}}</td>
                                     <td> {{$item->adults_no}}</td>
@@ -258,14 +281,20 @@
                             @endforelse
                             </tbody>
                         </table>
+
                     </div>
 
                 </div>
             </div>
 
             <div class="mt-4 d-flex justify-content-center">
-                {{--  <!--{{ $members->appends(request()->query())->links() }}-->   --}}
+                {{count($tourismFiles) ? $tourismFiles->links() : ''}}
             </div>
+            <!---------------------start print all grid ------------>
+            <div id="pr" style="display: none">
+                @include('admin.tourism_files.print', ['tourismFiles'=>@$tourismFiles])
+            </div>
+            <!-----end all grid ------------->
 
         </div>
     </div>

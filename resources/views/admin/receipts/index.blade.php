@@ -4,39 +4,24 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/all.min.css">
 
     <div class="page-container my-4">
-        {{-- Success Message --}}
-        @if(session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <i class="fas fa-check-circle me-2"></i>{{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-        @endif
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
 
 
         <div class="col-12 d-flex flex-wrap justify-content-between align-items-center my-3">
             <div class="col-12 col-md-8 mb-2 mb-md-0">
-                <h4 class="header-title">{{__('lang.airlines')}}</h4>
+                <h4 class="header-title">{{__('lang.receipts') . " " .__('lang.receipt_' . $type)}}</h4>
             </div>
             <div class="col-12 col-md-4 text-md-end text-center">
 
 
                 <div class="">
 
-                <a class="badge badge-outline-primary" href="{{url(route('admin.airlines.create'))}}">
-                                {{__('lang.add_new')}} </a>
+                    <a class="badge badge-outline-primary"
+                       href="{{url(route('admin.receipt.create' , ['type' =>$type]))}}">
+                        {{__('lang.add_new')}} </a>
 
 
                     {{--/**********excel btn**********/--}}
-                    <span title="اكسيل" onclick="getDataExcel('{{url('/admin/airlines_all')}}' , 'airlines.xlsx')"
+                    <span title="اكسيل" onclick="getDataExcel('{{url('/admin/receipts_all/' . $type)}}' , 'receipts.xlsx')"
                           target="_blank"
                           class="btn btn-sm btn-success  ">
                         <i class="ri-file-excel-line"></i>
@@ -44,7 +29,8 @@
 
                     {{--/*********excel brn**********/--}}
 
-                    <span title="طباعة" onclick="getDataPrint('{{url('/admin/airlines_all')}}' )" class="btn btn-sm btn-danger  ">
+                    <span title="طباعة" onclick="getDataPrint('{{url('/admin/receipts_all/' . $type)}}' )"
+                          class="btn btn-sm btn-danger  ">
                             <i class="ri-printer-line"></i>
                         </span>
 
@@ -60,10 +46,9 @@
 
                 <div class="card bg-search">
 
-                    <form action="#" method="get" class="card-body pb-3" >
+                    <form action="#" method="get" class="card-body pb-3">
                         @csrf
                         <div class="row ">
-
 
 
                             {{-- Search Input --}}
@@ -73,14 +58,13 @@
                             </div>
 
 
-
                             {{-- Action Buttons --}}
                             <div class="col-md-3">
                                 <div class="d-flex gap-2 ">
                                     <button type="submit" class="btn btn-success">
                                         <i class="ri-search-line me-1"></i>بحث
                                     </button>
-                                    <a href="{{url(route('admin.airlines.index'))}}"
+                                    <a href="{{url(route('admin.receipt.index' , ['type' => $type]))}}"
                                        class="btn btn-primary"> <i class="ri-arrow-go-back-line me-1"></i>إعادة تعيين
                                     </a>
 
@@ -100,6 +84,7 @@
 
             </div>
         </div>
+        {{--        <h2><a href="{{route('admin.receipt.show' , ['type' => $type , 'id' => 1])}}">uyuyu</a></h2>--}}
 
 
         {{-- Filtered Data --}}
@@ -132,36 +117,96 @@
                         <table class="table table-bordered">
                             <thead>
                             <tr>
-                                <th>الاسم</th>
-                                <th>الكود</th>
-                                <th>الرمز</th>
+                                <th> #</th>
+                                <th> name</th>
+                                <th>amount</th>
+                                <th>acc_id</th>
+                                <th>acc_details_id</th>
+                                <th>notes</th>
+                                <th>Rcreated_date</th>
+                                <th>by_id</th>
+
+
+                                {{--                                <th>Rtype</th>--}}
+                                {{--                                <th>currency</th>--}}
+                                {{--                                <th>pay_type</th>--}}
+                                {{--                                <th>pay_file</th>--}}
+                                {{--                                <th>acc_detail_type</th>--}}
+                                {{--                                <th> approve</th>--}}
+                                {{--                                <th>printed</th>--}}
+                                {{--                                <th>posted</th>--}}
+
                                 <th> التحكم</th>
+
                             </tr>
                             </thead>
                             <tbody>
 
 
-                            @forelse($airlines as $item)
+                            @forelse($receipts as $item)
+
                                 <tr>
-                                    <td>{{$item->name}}</td>
-                                    <td> {{$item->code}}</td>
-                                    <td>{{$item->symbol}}</td>
-                                    <td class="td_actions">                       @if(checkModulePermission('admins', 'edit'))
-                                            <a href="{{url(route('admin.airlines.edit' , $item->id))}}"
+                                    <td>{{$item->id??'-----'}}</td>
+
+                                    <td>{{$item->name??'-----'}}</td>
+                                    <td class=" fw-bold"> {{$item->amount . "     "  ??'-----'}} <span
+                                            class='text-primary'>   {{  $item->currencyRelation->symbol }}    </span>
+                                    </td>
+                                    <td>{{$item->account->name??'-----'}}</td>
+                                    <td>{{$item->acc_details_id??'-----'}}</td>
+                                    <td>{{$item->notes??'-----'}}</td>
+                                    <td>{{$item->date??'-----'}}</td>
+                                    <td> {{$item->user->name??'-----'}}</td>
+
+
+                                    {{--                                    <td>{{$item->Rtype->label()??'-----'}}</td>--}}
+                                    {{--                                    <td>{{$item->currency->name??'-----'}}</td>--}}
+                                    {{--                                    <td> {{$item->pay_type->label()??'-----'}}</td>--}}
+                                    {{--                                    <td>@if($item->pay_file)<a download href="{{asset($item->pay_file)}}"   class="btn text-primary"><i class="ri-download-2-fill fs-16"></i></a>@endif</td>--}}
+                                    {{--                                    <td> {{$item->acc_detail_type??'-----'}}</td>--}}
+                                    {{--                                    <td>{{$item->approve??'-----'}}</td>--}}
+                                    {{--                                    <td> {{ $item->printed   ? __('lang.yes') :__('lang.no')}}</td>--}}
+                                    {{--                                    <td>{{$item->posted??'-----'}}</td>--}}
+                                    {{--                                    <td>{{$item->date??'-----'}}</td>--}}
+
+
+                                    <td class="td_actions">
+                                        @if($item->pay_file)<a download href="{{asset($item->pay_file)}}"
+                                                               title="{{__('lang.download_attachment')}}"
+                                                               class="btn btn-soft-success btn-icon btn-sm rounded-circle "><i
+                                                class="ri-download-2-fill fs-16"></i></a>@endif
+                                        @if(checkModulePermission('admins', 'edit'))
+                                            <a href="{{url(route('admin.receipt.edit' , ['type' =>$type   , 'id' => $item->id]))}}"
+                                               title="{{__('lang.edit')}}"
                                                class="btn btn-soft-success btn-icon btn-sm rounded-circle mx-1">
                                                 <i class="ri-edit-box-line fs-16"></i>
                                             </a>
                                         @endif
+                                        @if(checkModulePermission('admins', 'view'))
+                                            <a onclick="printDiv('pr_{{$item->id}}')"
+                                               title="{{__('lang.print')}}"
+                                               class="btn btn-soft-success btn-icon btn-sm rounded-circle mx-1">
+                                                <i class="ri-printer-line fs-16"></i>
+                                            </a>
+                                        @endif
+
                                         @if(checkModulePermission('admins', 'delete'))
-                                            <form action="{{route('admin.airlines.destroy' , $item->id)}}" method="post"
+                                            <form
+                                                action="{{route('admin.receipt.destroy' , ['type' =>$type   , 'id' => $item])}}"
+                                                method="post"
                                             >
                                                 @csrf
                                                 @method('DELETE')
-                                            <div class="btn btn-soft-success btn-icon btn-sm rounded-circle"  onclick="confirmDeletion(this)"> <i class="ri-delete-bin-line fs-16"></i></div>
+                                                <div title="{{__('lang.delete')}}"
+                                                     class="btn btn-soft-success btn-icon btn-sm rounded-circle"
+                                                     onclick="confirmDeletion(this)"><i
+                                                        class="ri-delete-bin-line fs-16"></i></div>
 
-                    </form>
+                                            </form>
                                         @endif </td>
+
                                 </tr>
+
                             @empty
 
                             @endforelse
@@ -172,13 +217,25 @@
                 </div>
             </div>
 
+
+
+            <!-------------------------- print for each item -->
+            @foreach($receipts as $item)
+                <div id="pr_{{$item->id}}" style="display: none  ">
+                    @include('admin/receipts/print_item' , ['receipt' => $item , 'type' => $item->Rtype->value  , 'settings' => all_settings()->getSiteSetting()])
+                </div>
+            @endforeach
+            <!-------------------------- end print for each item -->
+
+
+
             <div class="mt-4 d-flex justify-content-center">
-                {{count($airlines) ? $airlines->links() : ''}}
+                {{count($receipts) ? $receipts->links() : ''}}
                 {{--  <!--{{ $members->appends(request()->query())->links() }}-->   --}}
             </div>
             <!---------------------start print all grid ------------>
             <div id="pr" style="display: none">
-                @include('admin.airlines.print', ['airlines'=>@$airlines])
+                @include('admin.receipts.print', ['receipts'=>@$receipts])
             </div>
             <!-----end all grid ------------->
 
@@ -254,21 +311,17 @@
         }
 
 
-
-
-
-
-        function confirmDeletion(obj){
+        function confirmDeletion(obj) {
             const form = obj.parentNode;
             if (!confirm('Are you sure you want to delete this item?')) {
                 return;
             }
 
-          return   form.submit();
+            return form.submit();
         }
 
     </script>
 
 
 
- @endsection
+@endsection

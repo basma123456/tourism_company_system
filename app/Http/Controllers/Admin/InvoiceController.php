@@ -27,7 +27,7 @@ class InvoiceController extends Controller
     public function index(Request $request)
     {
 //        $invoices = Invoice::with('invoiceItems' , 'client')->latest()->paginate(config('app.admin_pagination_number'));
-        $invoices = Invoice::with('invoiceItems' , 'client')->latest()->paginate(1);
+        $invoices = Invoice::with('invoiceItems' , 'client')->latest()->paginate(config('app.pagination_num'))->appends($request->query());
 
         return view('admin/invoices/index' , compact('invoices'));
     }
@@ -209,7 +209,7 @@ class InvoiceController extends Controller
 
 
 
-    //  used in ajax for print data
+    //  used in ajax for print list data
     public function getAllData()
     {
         $invoices = Invoice::with('invoiceItems' , 'client')->latest()->get();

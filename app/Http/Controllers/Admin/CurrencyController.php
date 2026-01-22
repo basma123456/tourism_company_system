@@ -17,7 +17,7 @@ class CurrencyController extends Controller
                 $q->where('name' , 'like' , "%" . $request->search . "%")->orWhere('symbol' , 'like' , "%" . $request->search . "%")->orWhere('rate' ,     $request->rate  );
             });
         }
-        $currencies = $query->latest()->get();
+        $currencies = $query->latest()->paginate(config('app.pagination_num'))->appends($request->query());
         return view('admin/currencies/index' , compact('currencies'));
     }
 
@@ -51,5 +51,22 @@ class CurrencyController extends Controller
         $currency->delete();
         return redirect(route('admin.currencies.index'))->with(['success' => 'lang.you have deleted  company successfully']);
     }
+
+    //  used in ajax for print data
+    public function getAllData(Request $request)
+    {
+//        $currencies= Currency::latest()->get();
+        $query = Currency::query();
+        if($request->filled('search')){
+            $query->where( function ($q) use ($request){
+                $q->where('name' , 'like' , "%" . $request->search . "%")->orWhere('symbol' , 'like' , "%" . $request->search . "%")->orWhere('rate' ,     $request->rate  );
+            });
+        }
+        $currencies = $query->latest()->get();
+
+        return view('admin.currencies.print', compact('currencies'));
+
+    }
+
 
 }

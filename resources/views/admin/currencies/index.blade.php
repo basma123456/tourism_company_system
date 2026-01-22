@@ -36,7 +36,7 @@
 
 
                     {{--/**********excel btn**********/--}}
-                    <span title="اكسيل" onclick="exportDivToExcel('pr', 'final_report.xlsx')"
+                    <span title="اكسيل" onclick="getDataExcel('{{url('/admin/currencies_all')}}', 'currencies.xlsx')"
                           target="_blank"
                           class="btn btn-sm btn-success  ">
                         <i class="ri-file-excel-line"></i>
@@ -44,7 +44,7 @@
 
                     {{--/*********excel brn**********/--}}
 
-                    <span title="طباعة" onclick="printDiv('pr')" class="btn btn-sm btn-danger  ">
+                    <span title="طباعة" onclick="getDataPrint('{{url('/admin/currencies_all')}}')" class="btn btn-sm btn-danger  ">
                             <i class="ri-printer-line"></i>
                         </span>
 
@@ -172,7 +172,15 @@
 
             <div class="mt-4 d-flex justify-content-center">
                 {{--  <!--{{ $members->appends(request()->query())->links() }}-->   --}}
+                {{count($currencies) ? $currencies->links() : ''}}
             </div>
+
+            <!---------------------start print all grid ------------>
+            <div id="pr" style="display: none">
+                @include('admin.currencies.print', ['currencies'=>@$currencies])
+            </div>
+            <!-----end all grid ------------->
+
 
         </div>
     </div>

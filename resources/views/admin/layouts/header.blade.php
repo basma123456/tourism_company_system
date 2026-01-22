@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+ <head>
     <meta charset="utf-8"/>
     <title>Rmaya</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -61,16 +60,14 @@
 
     @yield('styles')
     <meta name="csrf-token" content="{{ csrf_token() }}">
-</head>
+     @livewireScripts
+
+ </head>
 
 
 <body>
 <!-- Begin page -->
 <div class="wrapper">
-
-
-
-
 
 
 

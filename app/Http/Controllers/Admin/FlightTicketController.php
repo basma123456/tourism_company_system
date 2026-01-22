@@ -50,7 +50,7 @@ class FlightTicketController extends Controller
             $query->where('client_id', $request->client);
         }
 
-        $flightTickets = $query->with('airline' , 'client' , 'invoice')->latest()->get();
+        $flightTickets = $query->with('airline' , 'client' , 'invoice')->latest()->paginate(config('app.pagination_num'))->appends($request->query());
         $clients = Client::active()->select('id', 'name')->get();
         $airlines = Airline::select('id', 'name')->get();
 
@@ -153,5 +153,94 @@ class FlightTicketController extends Controller
         return redirect()->back()->with(['success' => 'lang.you have deleted  FlightTicket successfully']);
 
     }
+
+
+    //  used in ajax for print data
+    public function getAllData(Request $request)
+    {
+        $query = FlightTicket::query();
+        if ($request->filled('search')) {
+            $query->where(function ($q) use ($request) {
+                $q->where('ticket_no', 'like', "%" . $request->search . "%")
+                    ->orWhere('traveller_name', 'like', "%" . $request->search . "%")
+                    ->orWhere('from_city', 'like', "%" . $request->search . "%")
+                    ->orWhere('to_city', 'like', "%" . $request->search . "%")
+                    ->orWhere('price', $request->search)
+                    ->orWhere('airline_com', $request->search)
+                    ->orWhere('discount', $request->search);
+            });
+        }
+
+        if ($request->filled('airline_id')) {
+            $query->where('airline_id', $request->airline_id);
+        }
+
+        if ($request->filled('from_book_date') || $request->filled('to_book_date')) {
+            $from = ($request->from_book_date ?? date('Y-m-d'));
+            $to = ($request->to_book_date ?? date('Y-m-d'));
+            $query->whereBetween('book_date', [$from, $to]);
+        }
+
+        if ($request->filled('from_travel_date') || $request->filled('to_travel_date')) {
+            $from = ($request->from_travel_date ?? date('Y-m-d'));
+            $to = ($request->to_travel_date ?? date('Y-m-d'));
+            $query->whereBetween('travel_date', [$from, $to]);
+        }
+
+        if ($request->filled('client')) {
+            $query->where('client_id', $request->client);
+        }
+
+        $flightTickets = $query->with('airline' , 'client' , 'invoice')->latest()->get();
+//        $clients = Client::active()->select('id', 'name')->get();
+//        $airlines = Airline::select('id', 'name')->get();
+
+        return view('admin.flight_tickets.print', compact('flightTickets', 'clients', 'airlines'));
+
+    }
+
+
+    //  used in ajax for print data
+    public function getAllDataPrint(Request $request)
+    {
+        $query = FlightTicket::query();
+        if ($request->filled('search')) {
+            $query->where(function ($q) use ($request) {
+                $q->where('ticket_no', 'like', "%" . $request->search . "%")
+                    ->orWhere('traveller_name', 'like', "%" . $request->search . "%")
+                    ->orWhere('from_city', 'like', "%" . $request->search . "%")
+                    ->orWhere('to_city', 'like', "%" . $request->search . "%")
+                    ->orWhere('price', $request->search)
+                    ->orWhere('airline_com', $request->search)
+                    ->orWhere('discount', $request->search);
+            });
+        }
+
+        if ($request->filled('airline_id')) {
+            $query->where('airline_id', $request->airline_id);
+        }
+
+        if ($request->filled('from_book_date') || $request->filled('to_book_date')) {
+            $from = ($request->from_book_date ?? date('Y-m-d'));
+            $to = ($request->to_book_date ?? date('Y-m-d'));
+            $query->whereBetween('book_date', [$from, $to]);
+        }
+
+        if ($request->filled('from_travel_date') || $request->filled('to_travel_date')) {
+            $from = ($request->from_travel_date ?? date('Y-m-d'));
+            $to = ($request->to_travel_date ?? date('Y-m-d'));
+            $query->whereBetween('travel_date', [$from, $to]);
+        }
+
+        if ($request->filled('client')) {
+            $query->where('client_id', $request->client);
+        }
+
+        $flightTickets = $query->with('airline' , 'client' , 'invoice')->latest()->get();
+
+        return view('admin.flight_tickets.print', compact('flightTickets'));
+
+    }
+
 
 }

@@ -1,30 +1,5 @@
 var loader = document.querySelector('.loader')
 
-/////////for get data in a print of ( grid)
-function getDataPrint(url) {
-    loader.style.display = 'block';
-
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-
-
-    $.ajax({
-        url: url ,
-        type: 'POST',
-        success: function (html) {
-            $('#pr').html(html).show();
-            $('#pr').hide();
-            loader.style.display = 'none';
-            printDiv('pr')
-
-        }
-    });
-
-}
-
 
 
 function printDiv(divId) {
@@ -38,32 +13,6 @@ function printDiv(divId) {
     printWindow.document.write('</body></html>');
     printWindow.document.close();
     printWindow.print();
-}
-
-
-
-
-function getDataExcel(url , fileName = 'report.xlsx') {
-    loader.style.display = 'block';
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-
-
-    $.ajax({
-        url: url ,
-        type: 'POST',
-        success: function (html) {
-            $('#pr').html(html).show();
-            $('#pr').hide();
-            exportDivToExcel('pr' , fileName)
-            loader.style.display = 'none';
-
-        }
-    });
-
 }
 
 

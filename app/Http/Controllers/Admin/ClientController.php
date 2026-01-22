@@ -23,7 +23,7 @@ class ClientController extends Controller
                     ->orWhere('person_res', 'like', '%' .$request->search . '%')->orWhere('address', 'like', '%' .$request->search . '%')->orWhere('ctype', $request->search);
             });
         }
-        $clients = $query->latest()->get();
+        $clients = $query->latest()->paginate(config('app.pagination_num'))->appends($request->query());
         return view('admin/clients/index', compact('clients'));
     }
 
@@ -81,4 +81,28 @@ class ClientController extends Controller
         $client->delete();
         return redirect(route('admin.clients.index'))->with(['success' => 'lang.you have deleted  client successfully']);
     }
+
+
+
+
+    //  used in ajax for print data
+    public function getAllData(Request $request)
+    {
+        $query = Client::query();
+        if ($request->filled('search')) {
+            $query->where(function ($q) use ($request) {
+                $q->where('name', 'like', "%" . $request->search . "%")
+                    ->orWhere('phone', 'like', '%' .$request->search . '%'  )
+                    ->orWhere('code', $request->search)
+                    ->orWhere('email', $request->search)
+//                    ->orWhere('active', $request->search)
+                    ->orWhere('person_res', 'like', '%' .$request->search . '%')->orWhere('address', 'like', '%' .$request->search . '%')->orWhere('ctype', $request->search);
+            });
+        }
+        $clients = $query->latest()->get();
+        return view('admin.clients.print', compact('clients'));
+
+    }
+
+
 }

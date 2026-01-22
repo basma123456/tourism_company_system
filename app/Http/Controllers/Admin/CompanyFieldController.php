@@ -17,7 +17,7 @@ class CompanyFieldController extends Controller
                 $q->where('name', 'like', "%" . $request->search . "%");
             });
         }
-        $companyFields = $query->latest()->get();
+        $companyFields = $query->latest()->paginate(config('app.pagination_num'))->appends($request->query());
         return view('admin/company_fields/index', compact('companyFields'));
     }
 
@@ -58,4 +58,22 @@ class CompanyFieldController extends Controller
         $companyField->delete();
         return redirect(route('admin.company_fields.index'))->with(['success' => 'lang.you have deleted  company successfully']);
     }
+
+
+
+
+    //  used in ajax for print data
+    public function getAllData(Request $request)
+    {
+        $query = CompanyField::query();
+        if ($request->filled('search')) {
+            $query->where(function ($q) use ($request) {
+                $q->where('name', 'like', "%" . $request->search . "%");
+            });
+        }
+        $companyFields = $query->latest()->get();
+        return view('admin.company_fields.print', compact('companyFields'));
+
+    }
+
 }

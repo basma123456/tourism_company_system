@@ -363,5 +363,9 @@ return [
     'tree_accounts' => 'شجرة الحسابات',
     'generate invoice' => 'استخراج فاتورة',
 
+    'receipt_in' => 'قبض',
+    'receipt_out' => 'دفع',
+    'receipts' => 'ايصالات',
+
 
 ];

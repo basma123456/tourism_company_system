@@ -345,6 +345,9 @@ return [
     'airline_com' => 'Airline Commission',
     'tree_accounts' => 'Tree Accounts',
     'generate invoice' => 'Generate invoice',
+    'receipt_in' => 'Received',
+    'receipt_out' => 'Payment',
+    'receipts' => 'Receipts',
 
 
 

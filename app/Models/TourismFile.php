@@ -54,4 +54,9 @@ class TourismFile extends Model
         return  date_create($this->created_date)->format('Y-m-d');
     }
 
+    public function type()
+    {
+        return $this->belongsTo(CompanyField::class , 'Ftype');
+    }
+
 }

@@ -36,7 +36,7 @@
 
 
                     {{--/**********excel btn**********/--}}
-                    <span title="اكسيل" onclick="exportDivToExcel('pr', 'final_report.xlsx')"
+                    <span title="اكسيل" onclick="getDataExcel('{{url('/admin/clients_all')}}', 'clients.xlsx')"
                           target="_blank"
                           class="btn btn-sm btn-success  ">
                         <i class="ri-file-excel-line"></i>
@@ -44,7 +44,7 @@
 
                     {{--/*********excel brn**********/--}}
 
-                    <span title="طباعة" onclick="printDiv('pr')" class="btn btn-sm btn-danger  ">
+                    <span title="طباعة" onclick="getDataPrint('{{url('/admin/clients_all')}}')" class="btn btn-sm btn-danger  ">
                             <i class="ri-printer-line"></i>
                         </span>
 
@@ -59,7 +59,7 @@
             <div class="card-body">
 
                 <div class="card bg-search">
-                    <form action="{{route('admin.clients.index')}}" method="get" class="card-body pb-3" >
+                    <form   action="{{route('admin.clients.index')}}" method="get" class="card-body pb-3" >
                         @csrf
                         <div class="row ">
 
@@ -178,6 +178,8 @@
                             @endforelse
                             </tbody>
                         </table>
+
+
                     </div>
 
                 </div>
@@ -185,9 +187,19 @@
 
             <div class="mt-4 d-flex justify-content-center">
                 {{--  <!--{{ $members->appends(request()->query())->links() }}-->   --}}
+                {{count($clients) ? $clients->links() : ''}}
+
             </div>
 
+
+            <!---------------------start print all grid ------------>
+            <div id="pr" style="display: none">
+                @include('admin.clients.print', ['clients'=>@$clients])
+            </div>
+            <!-----end all grid ------------->
+
         </div>
+
     </div>
     </div>
     <style>

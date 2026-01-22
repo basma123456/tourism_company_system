@@ -85,7 +85,7 @@ class LogsController extends Controller
                 $query->whereDate('created_at', "<=", $request->to_date);
             }
 
-            $logs = $query->with('user')->latest()->paginate(config('app.admin_pagination_number')) ->appends($request->query());
+            $logs = $query->with('user')->latest()->paginate(config('app.pagination_number')) ->appends($request->query());
 //            $logs = $query->get();
 
             return view('admin.logs.index', ['logs' => $logs, 'users' => $users, 'modules' => $modules]);

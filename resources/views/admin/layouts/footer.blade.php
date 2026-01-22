@@ -110,19 +110,82 @@
 
 
 
- @livewireScripts
+@livewireScripts
 
 @yield('scripts')
  <script>
 
-
+var search;
         $(document).ready(function(){
   $('#dropDown').click(function(){
     $('.drop-down').toggleClass('drop-down--active');
   });
 });
 
-    </script>
+
+
+
+
+
+
+
+
+
+
+        /////////for get data in a print of ( grid)
+        function getDataPrint(url ,  data = {   search:  request = "{{request()->get('search') }}"} ) {
+            loader.style.display = 'block';
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+
+            $.ajax({
+                url: url ,
+                type: 'POST',
+                data: data,
+                success: function (html) {
+                    $('#pr').html(html).show();
+                    $('#pr').hide();
+                    loader.style.display = 'none';
+                    printDiv('pr')
+
+                }
+            });
+
+        }
+
+
+
+        function getDataExcel(url , fileName = 'report.xlsx' , data = {   search:  request = "{{request()->get('search') }}"}  ) {
+            loader.style.display = 'block';
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+
+            $.ajax({
+                url: url ,
+                type: 'POST',
+                data : data,
+                success: function (html) {
+                    $('#pr').html(html).show();
+                    $('#pr').hide();
+                    exportDivToExcel('pr' , fileName)
+                    loader.style.display = 'none';
+
+                }
+            });
+
+        }
+
+
+ </script>
 </body>
 
 
