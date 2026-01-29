@@ -15,8 +15,8 @@ new class extends Component
 
     public function mount($accounts = [])
     {
-         $this->accounts = collect($accounts);
-     }
+        $this->accounts = collect($accounts);
+    }
 
 
     public function setAccount($acc_id)
@@ -73,7 +73,6 @@ new class extends Component
     </div>
 
 
-
     @if( $companyField )
 
         <div class="col-6 ">
@@ -94,17 +93,17 @@ new class extends Component
 
 
 
-     {{-- Loader --}}
-    <div class="col-12 text-center"   wire:loading>
+    {{-- Loader --}}
+    <div class="col-12 text-center" wire:loading>
         <i class="spinner-border spinner-border-sm text-primary"></i>
         Loading...
     </div>
 
-{{--    --}}{{-- Result --}}
-{{--    <div class="col-6" wire:loading.remove wire:target="funcUpdatedAccId">--}}
-{{--        @if($companyField)--}}
-{{--            {{ $companyField->name }}--}}
-{{--        @endif--}}
-{{--    </div>--}}
+    {{--    --}}{{-- Result --}}
+    {{--    <div class="col-6" wire:loading.remove wire:target="funcUpdatedAccId">--}}
+    {{--        @if($companyField)--}}
+    {{--            {{ $companyField->name }}--}}
+    {{--        @endif--}}
+    {{--    </div>--}}
 </div>
 

@@ -51,27 +51,24 @@ Route::group([
     /***************************************excel and print ajax routes*******************/
     Route::post('getmsg/{id}', [InvoiceController::class, 'printAndGetData']); // for single invoice
     Route::post('invoice_all', [InvoiceController::class, 'getAllData']); //print all invoices
-
     Route::post('airlines_all', [AirLineController::class, 'getAllData']); //print all invoices
     Route::post('clients_all', [ClientController::class, 'getAllData']); //print all invoices
     Route::post('company_fields_all', [CompanyFieldController::class, 'getAllData']); //print all invoices
     Route::post('currencies_all', [CurrencyController::class, 'getAllData']); //print all currencies
     Route::post('flight_tickets_all', [FlightTicketController::class, 'getAllDataPrint']); //print all currencies
     Route::post('tourism_files_all', [TourismFileController::class, 'getAllData']); //print all currencies
-
-    Route::get('receipt/{type}', [ReceiptController::class, 'index'])->name('receipt.index');
-    Route::get('receipt/create/{type}', [ReceiptController::class, 'create'])->name('receipt.create');
-    Route::post('receipt/store/{type}', [ReceiptController::class, 'store'])->name('receipt.store');
-
-    Route::get('receipt/show/{type}/{id}', [ReceiptController::class, 'show'])->name('receipt.show');
-    Route::get('receipt/edit/{type}/{id}', [ReceiptController::class, 'edit'])->name('receipt.edit');
-    Route::put('receipt/update/{type}/{id}', [ReceiptController::class, 'update'])->name('receipt.update');
-    Route::delete('receipt/delete/{type}/{id}', [ReceiptController::class, 'destroy'])->name('receipt.destroy');
     Route::post('receipts_all/{type}', [ReceiptController::class, 'getAllData']); //print all receipts
 
 
 
     /***************************************end excel and print ajax routes*******************/
+    Route::get('receipt/{type}', [ReceiptController::class, 'index'])->name('receipt.index');
+    Route::get('receipt/create/{type}', [ReceiptController::class, 'create'])->name('receipt.create');
+    Route::post('receipt/store/{type}', [ReceiptController::class, 'store'])->name('receipt.store');
+    Route::get('receipt/show/{type}/{id}', [ReceiptController::class, 'show'])->name('receipt.show');
+    Route::get('receipt/edit/{type}/{id}', [ReceiptController::class, 'edit'])->name('receipt.edit');
+    Route::put('receipt/update/{type}/{id}', [ReceiptController::class, 'update'])->name('receipt.update');
+    Route::delete('receipt/delete/{type}/{id}', [ReceiptController::class, 'destroy'])->name('receipt.destroy');
 
 
 
