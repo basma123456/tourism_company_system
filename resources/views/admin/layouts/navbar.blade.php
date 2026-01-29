@@ -287,6 +287,33 @@
             @endif
 
 
+            @if(checkModulePermission('logs', 'view'))
+                <li class="side-nav-item">
+                    <a data-bs-toggle="collapse" href="#sidebarLayouts_receipts" aria-expanded="false"
+                       aria-controls="sidebarLayouts_receipts"
+                       class="side-nav-link">
+                        <span class="menu-icon"><i class="ri-layout-2-line"></i></span>
+                        <span class="menu-text">  {{__('lang.receipts')}}  </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="sidebarLayouts_receipts">
+                        <ul class="sub-menu">
+
+
+                            <li class="side-nav-item">
+                                <a href="{{url(route('admin.receipt.index' , ['type' => 'in']))}}"
+                                   class="side-nav-link"> {{__('lang.show')}} {{__('lang.receipts')}} {{__('lang.receipt_in')}} </a>
+                            </li>
+
+                            <li class="side-nav-item">
+                                <a href="{{url(route('admin.receipt.index', ['type' => 'out']))}}"
+                                   class="side-nav-link"> {{__('lang.show')}} {{__('lang.receipts')}}  {{__('lang.receipt_out')}} </a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </li>
+            @endif
 
         </ul>
 

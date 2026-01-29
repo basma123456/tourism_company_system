@@ -5,6 +5,20 @@
 
     <div class="page-container my-4">
 
+        {{-- Success Message --}}
+        @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="fas fa-check-circle me-2"></i>{{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        @endif
+        {{-- error Message --}}
+        @if(session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="fas fa-check-circle me-2"></i>{{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        @endif
 
         <div class="col-12 d-flex flex-wrap justify-content-between align-items-center my-3">
             <div class="col-12 col-md-8 mb-2 mb-md-0">
@@ -21,7 +35,8 @@
 
 
                     {{--/**********excel btn**********/--}}
-                    <span title="اكسيل" onclick="getDataExcel('{{url('/admin/receipts_all/' . $type)}}' , 'receipts.xlsx')"
+                    <span title="اكسيل"
+                          onclick="getDataExcel('{{url('/admin/receipts_all/' . $type)}}' , 'receipts.xlsx')"
                           target="_blank"
                           class="btn btn-sm btn-success  ">
                         <i class="ri-file-excel-line"></i>
@@ -85,6 +100,18 @@
             </div>
         </div>
         {{--        <h2><a href="{{route('admin.receipt.show' , ['type' => $type , 'id' => 1])}}">uyuyu</a></h2>--}}
+
+        @if(checkCurrentShift())
+            <h2>
+                <a href="{{url(route('admin.shift.close'))}}" class="btn btn-primary btn-sm">اغلاق يومية</a>
+            </h2>
+
+        @else
+            <h2>
+                <a href="{{url(route('admin.shift.open'))}}" class="btn btn-primary btn-sm">فتح يومية</a>
+            </h2>
+
+        @endif
 
 
         {{-- Filtered Data --}}
@@ -218,15 +245,13 @@
             </div>
 
 
-
             <!-------------------------- print for each item -->
             @foreach($receipts as $item)
                 <div id="pr_{{$item->id}}" style="display: none  ">
                     @include('admin/receipts/print_item' , ['receipt' => $item , 'type' => $item->Rtype->value  , 'settings' => all_settings()->getSiteSetting()])
                 </div>
-            @endforeach
-            <!-------------------------- end print for each item -->
-
+        @endforeach
+        <!-------------------------- end print for each item -->
 
 
             <div class="mt-4 d-flex justify-content-center">

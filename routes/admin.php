@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\CurrencyController;
 use App\Http\Controllers\Admin\FlightTicketController;
 use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\ReceiptController;
+use App\Http\Controllers\Admin\ShiftController;
 use App\Http\Controllers\Admin\TourismFileController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -60,7 +61,6 @@ Route::group([
     Route::post('receipts_all/{type}', [ReceiptController::class, 'getAllData']); //print all receipts
 
 
-
     /***************************************end excel and print ajax routes*******************/
     Route::get('receipt/{type}', [ReceiptController::class, 'index'])->name('receipt.index');
     Route::get('receipt/create/{type}', [ReceiptController::class, 'create'])->name('receipt.create');
@@ -71,13 +71,8 @@ Route::group([
     Route::delete('receipt/delete/{type}/{id}', [ReceiptController::class, 'destroy'])->name('receipt.destroy');
 
 
-
-
-
-
-
-
-
+    Route::get('open_shift', [ShiftController::class, 'openShift'])->name('shift.open');
+    Route::get('close_shift', [ShiftController::class, 'closeShift'])->name('shift.close');
 
 
     ###################################livewire##################################

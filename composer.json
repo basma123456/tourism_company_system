@@ -36,7 +36,8 @@
         },
         "files": [
             "app/Http/Helpers/roles_permissions_modules.php",
-            "app/Http/Helpers/settings.php"
+            "app/Http/Helpers/settings.php",
+            "app/Http/Helpers/helper.php"
         ]
     },
     "autoload-dev": {
