@@ -37,8 +37,8 @@ jobs:
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
           host: ftp.smartv-demo.com
-          username: svdemo
-          key: ${{ secrets.ID_RSA }}
+          username: tourism
+          key: ${{ secrets.tourism }}
           port: 21                 # same SSH/SFTP port
           script: |
             cd public_html/tourism_company
