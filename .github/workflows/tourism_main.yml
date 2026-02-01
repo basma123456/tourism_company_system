@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: appleboy/sftp-action@v0.1.5
 
       - name: Deploy via SFTP
         uses: appleboy/sftp-action@v0.1.7
