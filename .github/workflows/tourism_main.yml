@@ -10,24 +10,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout code
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Step 2: Install PHP dependencies locally
       - name: Install PHP dependencies
         run: |
           composer install --no-dev --optimize-autoloader
 
-      # Step 3: Upload files via FTP
       - name: Upload via FTP
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
-          server: ftp.smartv-demo.com                  # Your FTP host
-          username: tourism      # Your FTP username
-          password: ${{ secrets.TOURISM }}       # FTP password (stored as GitHub secret)
-          port: 21                                     # FTP port
-          protocol: ftps                                # ftp or ftps
-          local-dir: ./                                # Local directory to upload
-          server-dir: public_html/tourism_company/     # Remote directory on the server
-          log-level: standard                           # Corrected log-level option
+          server: ftp.smartv-demo.com
+          username: tourism
+          password: ${{ secrets.TOURISM }}
+          port: 21
+          protocol: ftp
+          local-dir: ./
+          server-dir: public_html/tourism_company/
+          log-level: verbose
+          security: loose
