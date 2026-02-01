@@ -1,4 +1,4 @@
-name: Deploy to cPanel via SFTP (password)
+name: Deploy via SFTP
 
 on:
   push:
@@ -9,17 +9,17 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
+      - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Deploy via SFTP
-        uses: appleboy/scp-action@v0.1.7
+        uses: appleboy/sftp-action@v0.1.7
         with:
           host: ftp.smartv-demo.com
           username: tourism
-          password: ${{ secrets.ID_RSA }}   # store cPanel password in GitHub Secrets
+          password: ${{ secrets.ID_RSA }}
           port: 21
           source: "./public"
           target: "public_html/tourism_company/"
-          overwrite: true
           strip_components: 0
+          rm: true
