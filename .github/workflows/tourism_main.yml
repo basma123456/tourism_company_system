@@ -17,7 +17,7 @@ jobs:
         with:
           host: ftp.smartv-demo.com
           username: tourism@smartv-demo.com
-          key: ${{ secrets.id_rsa }}
+          key: ${{ secrets.ID_RSA }}
           source: "./"
           target: "public_html/tourism_company"
           port: 22
