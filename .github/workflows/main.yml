@@ -1,0 +1,28 @@
+name: FTP Deploy to cPanel
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  ftp-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: FTP Deploy
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ftp.smartv-demo.com
+          username: "svdemo_remaya@remayatest.smartv-demo.com"
+          password: "%m4xPf+6HxI."
+          protocol: ftps
+          port: 21
+          security: loose
+          local-dir: ./
+          server-dir: /
+          dangerous-clean-slate: false
+          log-level: verbose
