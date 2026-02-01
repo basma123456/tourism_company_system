@@ -17,9 +17,13 @@ jobs:
         with:
           host: ftp.smartv-demo.com
           username: tourism
-          password: ${{ secrets.ID_RSA }}
-          port: 21
+          key: ${{ secrets.ID_RSA }}
+          port: 22          # usually SSH SFTP uses 22
           source: "./public"
           target: "public_html/tourism_company/"
           strip_components: 0
           rm: true
+      
+
+
+
