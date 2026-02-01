@@ -22,7 +22,9 @@ jobs:
           protocol: ftps
           port: 21
           security: loose
+          passive: true
+          timeout: 120000
           local-dir: ./
-          server-dir: /
+          server-dir: public_html/tourism_company
           dangerous-clean-slate: false
           log-level: verbose
