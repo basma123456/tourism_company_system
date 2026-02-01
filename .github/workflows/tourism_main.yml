@@ -19,14 +19,14 @@ jobs:
         run: |
           composer install --no-dev --optimize-autoloader
 
-      # Step 3: Upload via SCP/SFTP
+      # Step 3: Upload files via SFTP (SSH on port 21)
       - name: Upload files via SFTP
         uses: appleboy/scp-action@v0.1.3
         with:
           host: ftp.smartv-demo.com
-          username: tourism
+          username: svdemo
           key: ${{ secrets.ID_RSA }}
-          port: 22                 # SSH/SFTP port
+          port: 21                 # custom SSH/SFTP port
           source: "./"
           target: "public_html/tourism_company/"
           strip_components: 0
@@ -37,9 +37,9 @@ jobs:
         uses: appleboy/ssh-action@v0.1.6
         with:
           host: ftp.smartv-demo.com
-          username: tourism
+          username: svdemo
           key: ${{ secrets.ID_RSA }}
-          port: 22                 # SSH port should match SCP/SFTP
+          port: 21                 # same SSH/SFTP port
           script: |
             cd public_html/tourism_company
             php artisan migrate --force
