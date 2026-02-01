@@ -24,8 +24,8 @@ jobs:
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
           server: ftp.smartv-demo.com                  # Your FTP host
-          username: svdemo                             # Your FTP username
-          password: ${{ secrets.FTP_PASSWORD }}       # FTP password (stored as GitHub secret)
+          username: tourism@smartv-demo.com                             # Your FTP username
+          password: ${{ secrets.TOURISM }}       # FTP password (stored as GitHub secret)
           port: 21                                     # FTP port
           protocol: ftp                                # ftp or ftps
           local-dir: ./                                # Local directory to upload
