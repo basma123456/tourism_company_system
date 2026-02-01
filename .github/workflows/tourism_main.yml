@@ -20,7 +20,7 @@ jobs:
           username: tourism@smartv-demo.com
           protocol: sftp
           port: 22
-          ssh-private-key: ${{ secrets.SFTP_PRIVATE_KEY }}
+          ssh-private-key: ${{ secrets.id_rsa }}
           local-dir: ./
           server-dir: public_html/tourism_company/
           log-level: verbose
