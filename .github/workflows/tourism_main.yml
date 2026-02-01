@@ -18,7 +18,7 @@ jobs:
         with:
           server: ftp.smartv-demo.com
           username: "tourism@smartv-demo.com"
-          password: "z6P$v~Nhtbb_"
+          password: "Nt[.v;3+~}2?"
           protocol: ftps
           port: 21
           security: loose
