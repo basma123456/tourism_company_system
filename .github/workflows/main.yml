@@ -24,5 +24,7 @@ jobs:
           protocol: ftps
           port: 21
           local-dir: ./
+          exclude: .ftpgitignore;
+          
           server-dir: /public_html/tourism_company/
           dangerous-clean-slate: false
