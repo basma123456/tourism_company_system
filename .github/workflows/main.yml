@@ -18,7 +18,7 @@ jobs:
       - name: Deploy to cPanel via FTPS
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: smartv-demo.com
+          server: ftp.smartv-demo.com
           username: tourism@smartv-demo.com
           password: ${{ secrets.TOURISM }}
           protocol: ftps
