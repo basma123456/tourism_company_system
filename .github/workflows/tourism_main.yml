@@ -19,7 +19,7 @@ jobs:
           username: tourism           # your cPanel username
           key: ${{ secrets.ID_RSA }}  # full private key
           port: 2222                  # check your cPanel SSH port
-          source: "./"          # folder to deploy
+          source: "./public"          # folder to deploy
           target: "public_html/tourism_company/"
           overwrite: true
           strip_components: 0
