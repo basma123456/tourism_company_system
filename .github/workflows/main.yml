@@ -19,7 +19,7 @@ jobs:
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: smartv-demo.com
-          username: tourism
+          username: tourism@smartv-demo.com
           password: ${{ secrets.TOURISM }}
           protocol: ftps
           port: 21
