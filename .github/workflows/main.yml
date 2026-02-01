@@ -1,0 +1,30 @@
+name: CI-cPanel-Deploy
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      #  Deploy via FTPS (cPanel compatible)
+      - name: Deploy to cPanel via FTPS
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ftp.smartv-demo.com
+          username: tourism@smartv-demo.com
+          password: ${{ secrets.TOURISM }}
+          protocol: ftps
+          port: 21
+          local-dir: ./
+          exclude: .ftpgitignore;
+          
+          server-dir: /public_html/tourism_company/
+          dangerous-clean-slate: false
