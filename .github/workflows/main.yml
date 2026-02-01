@@ -10,21 +10,44 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      
       - name: Checkout code
         uses: actions/checkout@v4
 
-      #  Deploy via FTPS (cPanel compatible)
       - name: Deploy to cPanel via FTPS
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ftp.smartv-demo.com
-          username: tourism@smartv-demo.com
-          password: ${{ secrets.TOURISM }}
-          protocol: ftps
+          username: tourism@smartv-demo.com    # exact FTP username from cPanel
+          password: ${{ secrets.TOURISM }} # FTP password secret
+          protocol: ftpes                       # explicit FTPS
           port: 21
           local-dir: ./
-          exclude: .ftpgitignore;
-          
           server-dir: /public_html/tourism_company/
+          passive: true
           dangerous-clean-slate: false
+          exclude: |
+            *.log
+            .DS_Store
+            .env
+            .env.backup
+            .env.production
+            .phpactor.json
+            .phpunit.result.cache
+            /.fleet
+            /.idea
+            /.nova
+            /.phpunit.cache
+            /.vscode
+            /.zed
+            /auth.json
+            /node_modules
+            /public/build
+            /public/hot
+            /public/storage
+            /storage/*.key
+            /storage/pail
+            /vendor
+            Homestead.json
+            Homestead.yaml
+            Thumbs.db
+            editorconfig
