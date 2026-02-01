@@ -29,3 +29,5 @@ jobs:
           server-dir: public_html/tourism_company/
           log-level: verbose
           security: loose
+          exclude: .ftpignore
+
