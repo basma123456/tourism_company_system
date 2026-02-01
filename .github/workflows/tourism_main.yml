@@ -32,6 +32,3 @@ jobs:
           server-dir: public_html/tourism_company     # Remote directory on the server
           log-level: info                              # Optional: show info logs
 
-      # Optional Step 4: Post-deploy message
-      - name: Deployment complete
-        run: echo "✅ Laravel files have been uploaded via FTP. Remember: Laravel commands (migrate, cache) require SSH access."
