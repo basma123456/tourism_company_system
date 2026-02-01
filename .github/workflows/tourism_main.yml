@@ -13,14 +13,14 @@ jobs:
       - name: Checkout repository tourism
         uses: actions/checkout@v4
 
-      - name: Deploy via SFTP (SSH key)
+      - name: Deploy via SFTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ftp.smartv-demo.com
           username: tourism@smartv-demo.com
+          password: ${{ secrets.id_rsa }}
           protocol: sftp
           port: 22
-          ssh-private-key: ${{ secrets.id_rsa }}
           local-dir: ./
           server-dir: public_html/tourism_company/
           log-level: verbose
