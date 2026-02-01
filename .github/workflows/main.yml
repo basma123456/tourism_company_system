@@ -19,7 +19,7 @@ jobs:
           server: ftp.smartv-demo.com
           username: tourism@smartv-demo.com    # exact FTP username from cPanel
           password: ${{ secrets.TOURISM }} # FTP password secret
-          protocol: ftpes                       # explicit FTPS
+          protocol: ftps                       # explicit FTPS
           port: 21
           local-dir: ./
           server-dir: /public_html/tourism_company/
