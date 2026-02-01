@@ -24,7 +24,7 @@ jobs:
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
           host: ftp.smartv-demo.com
-          username: tourism
+          username: tourism@smartv-demo.com
           key: ${{ secrets.TOURISM }}
           port: 21                 # custom SSH/SFTP port
           source: "./"
@@ -37,7 +37,7 @@ jobs:
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
           host: ftp.smartv-demo.com
-          username: tourism
+          username: tourism@smartv-demo.com
           key: ${{ secrets.TOURISM }}
           port: 21                 # same SSH/SFTP port
           script: |
