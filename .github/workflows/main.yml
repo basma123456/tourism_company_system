@@ -20,7 +20,7 @@ jobs:
         with:
           server: smartv-demo.com
           username: tourism
-          password: ${{ secrets.FTP_PASSWORD }}
+          password: ${{ secrets.TOURISM }}
           protocol: ftps
           port: 21
           local-dir: ./
