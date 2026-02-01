@@ -19,11 +19,7 @@ jobs:
         run: |
           composer install --no-dev --optimize-autoloader
 
-      # Step 3: Build frontend assets (if using npm)
-      - name: Build frontend
-        run: |
-          npm install
-          npm run build
+    
 
       # Step 4: Upload via SCP/SFTP on port 21
       - name: Upload files via SFTP
