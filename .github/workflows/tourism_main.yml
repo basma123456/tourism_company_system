@@ -21,7 +21,7 @@ jobs:
 
       # Step 4: Deploy via SCP/SFTP
       - name: Upload files via SFTP
-        uses: appleboy/scp-action@v0.1.3
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           host: ftp.smartv-demo.com
           username: tourism
@@ -34,7 +34,7 @@ jobs:
 
       # Step 5: Optional: Run remote commands via SSH
       - name: Run remote commands
-        uses: appleboy/ssh-action@v0.1.6
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           host: ftp.smartv-demo.com
           username: tourism
