@@ -1,38 +1,28 @@
-name: CI-SFTP
- 
-# Controls when the action will run. 
+name: CI-cPanel-Deploy
+
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
   push:
     branches: [ main ]
-#  pull_request:
-#    branches: [ main ]
- 
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
- 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+
 jobs:
-  # This workflow contains a single job called "SFTP"
-  deploy-via-sftp:
+  deploy:
     runs-on: ubuntu-latest
+
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-          
-      - name: SFTP Deploy
-        uses: wlixcc/SFTP-Deploy-Action@v1.2.1
+      
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      #  Deploy via FTPS (cPanel compatible)
+      - name: Deploy to cPanel via FTPS
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
+          server: smartv-demo.com
           username: tourism
-          server:  smartv-demo.com 
-          port: 22 # default is 22
-          ssh_private_key: ${{ secrets.TOURISM }}
- 
-          
-          # will put all file under this path
-          local_path: ./* # default is ./*
-          # files will copy to under remote_path
-          remote_path: /tourism_compamy
-          
-          # sftp args
-          args: '-o ConnectTimeout=5'
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          port: 21
+          local-dir: ./
+          server-dir: /public_html/tourism_company/
+          dangerous-clean-slate: false
