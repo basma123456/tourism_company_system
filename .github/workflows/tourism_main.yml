@@ -1,4 +1,4 @@
-name: FTP Deploy to cPanel from tourism
+name: Deploy to cPanel via SFTP
 
 on:
   push:
@@ -6,25 +6,21 @@ on:
       - main
 
 jobs:
-  ftp-deploy:
+  sftp-deploy:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository tourism
         uses: actions/checkout@v4
 
-      - name: FTP Deploy tourism
+      - name: Deploy via SFTP (SSH key)
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ftp.smartv-demo.com
-          username: "tourism@smartv-demo.com"
-          password: "Nt[.v;3+~}2?"
-          protocol: ftps
-          port: 21
-          security: loose
-          passive: true
-          timeout: 120000
+          username: tourism@smartv-demo.com
+          protocol: sftp
+          port: 22
+          ssh-private-key: ${{ secrets.SFTP_PRIVATE_KEY }}
           local-dir: ./
           server-dir: public_html/tourism_company/
-          dangerous-clean-slate: false
           log-level: verbose
