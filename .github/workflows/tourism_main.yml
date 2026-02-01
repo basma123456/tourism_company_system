@@ -25,6 +25,6 @@ jobs:
           passive: true
           timeout: 120000
           local-dir: ./
-          server-dir: public_html/tourism_company
+          server-dir: public_html/tourism_company/
           dangerous-clean-slate: false
           log-level: verbose
