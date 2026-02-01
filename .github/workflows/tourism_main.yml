@@ -1,4 +1,4 @@
-name: Deploy to cPanel via SFTP
+name: Deploy to cPanel via SFTP (SSH key)
 
 on:
   push:
@@ -6,21 +6,18 @@ on:
       - main
 
 jobs:
-  sftp-deploy:
+  deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository tourism
+      - name: Checkout repo
         uses: actions/checkout@v4
 
       - name: Deploy via SFTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        uses: appleboy/scp-action@v0.1.7
         with:
-          server: ftp.smartv-demo.com
+          host: ftp.smartv-demo.com
           username: tourism@smartv-demo.com
-          password: ${{ secrets.id_rsa }}
-          protocol: sftp
+          key: ${{ secrets.SFTP_PRIVATE_KEY }}
+          source: "./"
+          target: "public_html/tourism_company"
           port: 22
-          local-dir: ./
-          server-dir: public_html/tourism_company/
-          log-level: verbose
