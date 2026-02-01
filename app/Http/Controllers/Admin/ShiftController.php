@@ -36,7 +36,7 @@ class ShiftController extends Controller
               $shift->save();
           }
         }
-        dd($shift);
+        dd('basma');
         return redirect()->back()->with('error' , __('lang.shift is closed successfully'));
 
     }
