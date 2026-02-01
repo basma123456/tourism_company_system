@@ -26,7 +26,7 @@ jobs:
           username: tourism
           server:  smartv-demo.com 
           port: 22 # default is 22
-          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
+          ssh_private_key: ${{ secrets.TOURISM }}
  
           
           # will put all file under this path
