@@ -1,0 +1,28 @@
+name: FTP Deploy to cPanel from tourism
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  ftp-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository tourism
+        uses: actions/checkout@v4
+
+      - name: FTP Deploy tourism
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ftp.smartv-demo.com
+          username: "tourism@smartv-demo.com"
+          password: "z6P$v~Nhtbb_"
+          protocol: ftps
+          port: 21
+          security: loose
+          local-dir: ./
+          server-dir: /
+          dangerous-clean-slate: false
+          log-level: verbose
