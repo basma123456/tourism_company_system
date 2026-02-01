@@ -1,4 +1,4 @@
-name: Deploy to cPanel via SFTP (SSH key)
+name: Deploy to cPanel via SFTP (password)
 
 on:
   push:
@@ -16,10 +16,10 @@ jobs:
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ftp.smartv-demo.com
-          username: tourism           # your cPanel username
-          key: ${{ secrets.ID_RSA }}  # full private key
-          port: 2222                  # check your cPanel SSH port
-          source: "./public"          # folder to deploy
+          username: tourism
+          password: ${{ secrets.TOURISM }}   # store cPanel password in GitHub Secrets
+          port: 21
+          source: "./public"
           target: "public_html/tourism_company/"
           overwrite: true
           strip_components: 0
