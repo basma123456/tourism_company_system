@@ -29,5 +29,5 @@ jobs:
           port: 21                                     # FTP port
           protocol: ftp                                # ftp or ftps
           local-dir: ./                                # Local directory to upload
-          server-dir: public_html/tourism_company     # Remote directory on the server
+          server-dir: public_html/tourism_company/     # Remote directory on the server
           log-level: standard                           # Corrected log-level option
