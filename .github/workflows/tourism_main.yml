@@ -21,7 +21,7 @@ jobs:
 
       # Step 4: Deploy via SCP/SFTP
       - name: Upload files via SFTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        uses: appleboy/scp-action@v0.1.3
         with:
           host: ftp.smartv-demo.com
           username: tourism
@@ -34,7 +34,7 @@ jobs:
 
       # Step 5: Optional: Run remote commands via SSH
       - name: Run remote commands
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        uses: appleboy/scp-action@v0.1.3
         with:
           host: ftp.smartv-demo.com
           username: tourism
@@ -45,3 +45,7 @@ jobs:
             php artisan migrate --force
             php artisan config:cache
             php artisan route:cache
+
+
+  
+
