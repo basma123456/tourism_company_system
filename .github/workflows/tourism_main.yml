@@ -22,7 +22,7 @@ jobs:
           source: "./"
           target: "public_html/tourism_company/"
           strip_components: 0
-          rm: true
+          # rm: true
       
 
 
