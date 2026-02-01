@@ -25,7 +25,7 @@ jobs:
         with:
           host: ftp.smartv-demo.com
           username: tourism
-          key: ${{ secrets.tourism }}
+          key: ${{ secrets.TOURISM }}
           port: 21                 # custom SSH/SFTP port
           source: "./"
           target: "public_html/tourism_company/"
@@ -38,7 +38,7 @@ jobs:
         with:
           host: ftp.smartv-demo.com
           username: tourism
-          key: ${{ secrets.tourism }}
+          key: ${{ secrets.TOURISM }}
           port: 21                 # same SSH/SFTP port
           script: |
             cd public_html/tourism_company
