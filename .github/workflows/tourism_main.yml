@@ -1,4 +1,4 @@
-name: Laravel Production Deployment
+name: Laravel FTP Deployment
 
 on:
   push:
@@ -14,34 +14,24 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Step 2: Install PHP dependencies
+      # Step 2: Install PHP dependencies locally
       - name: Install PHP dependencies
         run: |
           composer install --no-dev --optimize-autoloader
 
-      # Step 3: Upload files via SFTP (SSH on port 21)
-      - name: Upload files via SFTP
+      # Step 3: Upload files via FTP
+      - name: Upload via FTP
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
-          host: ftp.smartv-demo.com
-          username: tourism@smartv-demo.com
-          key: ${{ secrets.TOURISM }}
-          port: 21                 # custom SSH/SFTP port
-          source: "./"
-          target: "public_html/tourism_company/"
-          strip_components: 0
-          rm: true
+          server: ftp.smartv-demo.com                  # Your FTP host
+          username: svdemo                             # Your FTP username
+          password: ${{ secrets.FTP_PASSWORD }}       # FTP password (stored as GitHub secret)
+          port: 21                                     # FTP port
+          protocol: ftp                                # ftp or ftps
+          local-dir: ./                                # Local directory to upload
+          server-dir: public_html/tourism_company     # Remote directory on the server
+          log-level: info                              # Optional: show info logs
 
-      # Step 4: Run remote Laravel commands via SSH
-      - name: Run remote commands
-        uses: SamKirkland/FTP-Deploy-Action@4.3.0
-        with:
-          host: ftp.smartv-demo.com
-          username: tourism@smartv-demo.com
-          key: ${{ secrets.TOURISM }}
-          port: 21                 # same SSH/SFTP port
-          script: |
-            cd public_html/tourism_company
-            php artisan migrate --force
-            php artisan config:cache
-            php artisan route:cache
+      # Optional Step 4: Post-deploy message
+      - name: Deployment complete
+        run: echo "✅ Laravel files have been uploaded via FTP. Remember: Laravel commands (migrate, cache) require SSH access."
