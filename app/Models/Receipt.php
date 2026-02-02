@@ -27,6 +27,7 @@ class Receipt extends Model
         'posted',
         'Rcreated_date',
         'by_id',
+        'updated_by_shift_id',
     ];
 
 

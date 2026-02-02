@@ -54,7 +54,7 @@ class ReceiptController extends Controller
 
     public function store(ReceiptRequest $request, $type)
     {
-        if(openShift()) {
+        if (openShift()) {
             $newArr = array_merge(
                 [
                     'by_id' => auth()->id(), 'shift_id' => Shift::where(['shift_date' => now()->format('Y-m-d'), 'closed' => 0])->value('id')
@@ -74,10 +74,13 @@ class ReceiptController extends Controller
 
     public function update(ReceiptRequest $request, $type, $id)
     {
-        if (openShift()) {
-            $receipt = Receipt::findOrFail($id);
+        $receipt = Receipt::findOrFail($id);
 
-            $newArr = array_merge(['by_id' => auth()->id()], $request->validated());
+        if (openShift() && $receipt->approve == 'no') {
+            $newArr = array_merge([
+                'by_id' => auth()->id(),
+                'updated_by_shift_id' => Shift::where(['shift_date' => now()->format('Y-m-d'), 'closed' => 0])->value('id')
+            ], $request->validated());
             if ($request->pay_file) {
                 $file = $this->updateImage($request, '/receipts', $request->pay_file, 'pay_file', $receipt);
                 $newArr = array_merge($newArr, ['pay_file' => $file]);
@@ -93,8 +96,9 @@ class ReceiptController extends Controller
                 $newArr = array_merge($newArr, ['printed' => 0]);
             }
             $receipt->update($newArr);
+            return redirect()->back()->with('success', __('receipt_is_updated_successfuly'));
         }
-        return redirect()->back();
+        return redirect()->back()->with('error', __('something_wrong'));
     }
 
 
@@ -111,6 +115,14 @@ class ReceiptController extends Controller
     {
         $receipts = Receipt::with('user:id,name', 'account', 'createdBy', 'currencyRelation')->where('Rtype', $type)->latest()->paginate(config('app.pagination_num'));
         return view('admin.receipts.print', compact('receipts', 'type'));
+    }
+
+    public function approve($id)
+    {
+        $receipt = Receipt::where('id', $id)->update(['approve' => 'yes']);
+        if ($receipt) {
+            return redirect()->back()->with('success', __('lang.receipt_approved_successfully'));
+        }
     }
 
 

@@ -199,21 +199,99 @@
 
 
                                     <td class="td_actions">
+                                        @if(checkModulePermission('admins', 'view'))
+                                            @if($item->approve == 'no')
+                                                <a data-bs-toggle="modal" data-bs-target="#myModal{{$item->id}}"
+                                                    title="{{__('lang.press_to_approve')}}"
+                                                    style="background-color: rgba(255,0,0,0.35) !important; color:white"
+                                                    class="btn btn-soft-success btn-icon btn-sm rounded-circle gap-1">
+                                                    <i class="ri-check-fill fs-16"></i>
+                                                </a>
+
+                                                <!-------start ----------->
+
+                                                <!-- The Modal -->
+                                                <div class="modal" id="myModal{{$item->id}}">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+
+                                                            <!-- Modal Header -->
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title">Modal Heading</h4>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                            </div>
+
+                                                            <!-- Modal body -->
+                                                            <div class="modal-body text-center">
+                                                                {{__('lang.are_you_sure_you_want_to_approve_this_receipt_number')}}   {{$item->id}}
+                                                            </div>
+
+                                                            <!-- Modal footer -->
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                                                <a onclick="window.location.href='{{url(route('admin.approve_receipt' , $item->id))}}'" class="btn btn-success text-white" style="background-color: forestgreen" data-bs-dismiss="modal">Yes</a>
+
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--------end --------->
+                                            @else
+                                                <a
+                                                    title="{{__('lang.approved')}}"  data-bs-toggle="modal" data-bs-target="#myModal{{$item->id}}"
+                                                    style="background-color: rgba(0,128,0,0.37) !important; color:white"
+                                                    class="btn  btn-soft-success  btn-icon btn-sm rounded-circle gap-1 disabled:opacity-25">
+                                                    <i class="ri-check-fill fs-16"></i>
+                                                </a>
+
+                                                <!-------start ----------->
+
+                                                <!-- The Modal -->
+                                                <div class="modal" id="myModal{{$item->id}}">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+
+                                                            <!-- Modal Header -->
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title">Modal Heading</h4>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                            </div>
+
+                                                            <!-- Modal body -->
+                                                            <div class="modal-body text-center">
+                                                               {{__('lang.Already Approved')}}  <a
+                                                                    title="{{__('lang.approved')}}"
+                                                                    style="background-color: rgba(0,128,0,0.37) !important; color:white"
+                                                                    class="rounded-circle gap-1 disabled:opacity-25">
+                                                                    <i class="ri-check-fill fs-16"></i>
+                                                                </a>
+                                                            </div>
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--------end --------->
+
+                                            @endif
+                                        @endif
+
                                         @if($item->pay_file)<a download href="{{asset($item->pay_file)}}"
                                                                title="{{__('lang.download_attachment')}}"
-                                                               class="btn btn-soft-success btn-icon btn-sm rounded-circle "><i
+                                                               class="btn btn-soft-success btn-icon btn-sm rounded-circle gap-1"><i
                                                 class="ri-download-2-fill fs-16"></i></a>@endif
                                         @if(checkModulePermission('admins', 'edit'))
                                             <a href="{{url(route('admin.receipt.edit' , ['type' =>$type   , 'id' => $item->id]))}}"
                                                title="{{__('lang.edit')}}"
-                                               class="btn btn-soft-success btn-icon btn-sm rounded-circle mx-1">
+                                               class="btn btn-soft-success btn-icon btn-sm rounded-circle gap-1">
                                                 <i class="ri-edit-box-line fs-16"></i>
                                             </a>
                                         @endif
                                         @if(checkModulePermission('admins', 'view'))
                                             <a onclick="printDiv('pr_{{$item->id}}')"
                                                title="{{__('lang.print')}}"
-                                               class="btn btn-soft-success btn-icon btn-sm rounded-circle mx-1">
+                                               class="btn btn-soft-success btn-icon btn-sm rounded-circle  gap-1">
                                                 <i class="ri-printer-line fs-16"></i>
                                             </a>
                                         @endif
@@ -226,7 +304,7 @@
                                                 @csrf
                                                 @method('DELETE')
                                                 <div title="{{__('lang.delete')}}"
-                                                     class="btn btn-soft-success btn-icon btn-sm rounded-circle"
+                                                     class="btn btn-soft-success btn-icon btn-sm rounded-circle  gap-1"
                                                      onclick="confirmDeletion(this)"><i
                                                         class="ri-delete-bin-line fs-16"></i></div>
 
