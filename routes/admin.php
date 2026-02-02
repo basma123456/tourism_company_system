@@ -71,7 +71,7 @@ Route::group([
     Route::delete('receipt/delete/{type}/{id}', [ReceiptController::class, 'destroy'])->name('receipt.destroy');
 
 
-    Route::get('open_shift', [ShiftController::class, 'openShift'])->name('shift.open');
+    Route::get('open_shift', [ShiftController::class, 'openShiftFunc'])->name('shift.open');
     Route::get('close_shift', [ShiftController::class, 'closeShift'])->name('shift.close');
 
 

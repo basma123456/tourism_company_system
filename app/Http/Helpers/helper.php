@@ -21,4 +21,15 @@ if (!function_exists('numOfShiftsOfToday')) {
     }
 }
 
+if (!function_exists('openShift')) {
+    //check if today has shifts or no to add to its count plus one
+    // and this case  if we want to create another shift
+    function openShift()
+    {
+        return  Shift::where(['shift_date' => now()->format('Y-m-d') , 'closed' => 0])->exists();
+    }
+}
+
+
+
 

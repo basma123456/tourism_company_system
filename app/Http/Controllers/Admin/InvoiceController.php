@@ -26,6 +26,7 @@ class InvoiceController extends Controller
 //    }
     public function index(Request $request)
     {
+
 //        $invoices = Invoice::with('invoiceItems' , 'client')->latest()->paginate(config('app.admin_pagination_number'));
         $invoices = Invoice::with('invoiceItems' , 'client')->latest()->paginate(config('app.pagination_num'))->appends($request->query());
 

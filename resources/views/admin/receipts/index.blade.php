@@ -28,10 +28,11 @@
 
 
                 <div class="">
-
-                    <a class="badge badge-outline-primary"
-                       href="{{url(route('admin.receipt.create' , ['type' =>$type]))}}">
-                        {{__('lang.add_new')}} </a>
+                    @if(openShift())
+                        <a class="badge badge-outline-primary"
+                           href="{{url(route('admin.receipt.create' , ['type' =>$type]))}}">
+                            {{__('lang.add_new')}} </a>
+                    @endif
 
 
                     {{--/**********excel btn**********/--}}
@@ -101,7 +102,7 @@
         </div>
         {{--        <h2><a href="{{route('admin.receipt.show' , ['type' => $type , 'id' => 1])}}">uyuyu</a></h2>--}}
 
-        @if(checkCurrentShift())
+        @if(openShift())
             <h2>
                 <a href="{{url(route('admin.shift.close'))}}" class="btn btn-primary btn-sm">اغلاق يومية</a>
             </h2>

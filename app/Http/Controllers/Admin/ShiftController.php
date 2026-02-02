@@ -8,14 +8,15 @@ use Illuminate\Http\Request;
 //basma basma
 class ShiftController extends Controller
 {
-    public function openShift(Request $request)
+    public function openShiftFunc(Request $request)
     {
-        if(!checkCurrentShift()){
+
+        if(!openShift()){
             Shift::create( [
                 'user_id' => auth()->id(),
                 'shift_date' => now()->format('Y-m-d'),
-                'name' => 'shift-' . ( numOfShiftsOfToday() + 1),
-                'closed' => 1,
+                'name' => 'shift-' . ( (numOfShiftsOfToday()??0) + 1),
+                'closed' => 0,
             ]);
         }
 
@@ -25,18 +26,19 @@ class ShiftController extends Controller
 
     public function closeShift(Request $request)
     {
-        if(checkCurrentShift()){
+
+        if(openShift()){
           $shift =  Shift::where( [
-                'user_id' => auth()->id(),
                 'shift_date' => now()->format('Y-m-d'),
-                'closed' => 1,
+                'closed' => 0,
             ])->first();
           if($shift){
-              $shift->closed = 0;
+              $shift->closed = 1;
               $shift->save();
           }
         }
-        dd('basma');
+        Shift::where('shift_date','<', date('Y-m-d'))->update(['closed' => 1]);  // اغلاق اي يومية مش في نفس اليوم
+
         return redirect()->back()->with('error' , __('lang.shift is closed successfully'));
 
     }
