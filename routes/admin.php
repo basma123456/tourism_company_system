@@ -41,7 +41,7 @@ Route::group([
 
 
     ##########################invoices##################################
-    Route::post('generate_invoice', [InvoiceController::class, 'generateInvoice'])->name('generate_invoice');
+    Route::post('generate_invoice', [InvoiceController::class, 'generateInvoice'])->name('generate_invoice'); //you will see this in flight tickets index
     Route::get('invoice-show/{id?}', [InvoiceController::class, 'show'])->name('invoices.show');
     Route::resource('invoices', InvoiceController::class)->except('show');
     Route::get('fff', function () {

@@ -28,9 +28,9 @@ class InvoiceController extends Controller
     {
 
 //        $invoices = Invoice::with('invoiceItems' , 'client')->latest()->paginate(config('app.admin_pagination_number'));
-        $invoices = Invoice::with('invoiceItems' , 'client')->latest()->paginate(config('app.pagination_num'))->appends($request->query());
+        $invoices = Invoice::with('invoiceItems', 'client')->latest()->paginate(config('app.pagination_num'))->appends($request->query());
 
-        return view('admin/invoices/index' , compact('invoices'));
+        return view('admin/invoices/index', compact('invoices'));
     }
 
 
@@ -42,7 +42,7 @@ class InvoiceController extends Controller
             'ids.*' => ['integer', 'exists:ma_flight_tickets,id'],
         ]);
 
-        $flightTicketQuery = FlightTicket::with('airline:id,name' , 'client:id,name')->whereIn('id', $request->ids);
+        $flightTicketQuery = FlightTicket::with('airline:id,name', 'client:id,name')->whereIn('id', $request->ids);
         $tickets = $flightTicketQuery->get();
         $amount = $tickets->sum(fn ($t) => ($t->price ?? 0) - (($t->discount ?? 0) + ($t->airline_com ?? 0) + ($t->additional_fees ?? 0)));
 
@@ -59,14 +59,14 @@ class InvoiceController extends Controller
             $invoicesArr[$key]['id'] = '-----------';
             $invoicesArr[$key]['inv_id'] = '-----------';
             $invoicesArr[$key]['ticket_no'] = $item->ticket_no;
-            $invoicesArr[$key]['traveller_name'] =  $item->traveller_name;
-            $invoicesArr[$key]['travel_date']= $item->travel_date;
+            $invoicesArr[$key]['traveller_name'] = $item->traveller_name;
+            $invoicesArr[$key]['travel_date'] = $item->travel_date;
             $invoicesArr[$key]['from_city'] = $item->from_city;
-            $invoicesArr[$key]['to_city'] =$item->to_city;
+            $invoicesArr[$key]['to_city'] = $item->to_city;
             $invoicesArr[$key]['final_amount'] = $item->final_amount;
-            $invoicesArr[$key]['book_date'] =$item->book_date;
-            $invoicesArr[$key]['airline_name'] =$item->airline->name;
-            $invoicesArr[$key]['client_name'] =$item->client->name;
+            $invoicesArr[$key]['book_date'] = $item->book_date;
+            $invoicesArr[$key]['airline_name'] = $item->airline->name;
+            $invoicesArr[$key]['client_name'] = $item->client->name;
             $invoicesArr[$key]['invoice_item_id'] = $item->invoice_item_id;
             $invoicesArr[$key]['notes'] = $item->notes;
         }
@@ -75,23 +75,21 @@ class InvoiceController extends Controller
         $invoicesArr[0]['inv_code'] = '--------';
         $invoicesArr[0]['inv_date'] = date('Y-m-d');
         $invoicesArr[0]['invoice_amount'] = $amount;
-        $invoicesArr[0]['invoice_tax'] =  (0.15) * ($amount);
+        $invoicesArr[0]['invoice_tax'] = (0.15) * ($amount);
         $invoicesArr[0]['invoice_amount'] = $amount;
 
-        Session::put('invoicesArr' , $invoicesArr);
+        Session::put('invoicesArr', $invoicesArr);
         return redirect()
             ->route('admin.invoices.show')
             ->with('success', 'Invoice generated successfully.');
     }
 
 
-
-
     public function show(Request $request, $id = null)
     {
 
 // dd(session('invoicesArr'));
-        if (is_numeric($id )  &&  $id > 0) {
+        if (is_numeric($id) && $id > 0) {
             $invoice = DB::table('ma_invoices')
                 ->join('ma_invoices_items', 'ma_invoices.id', '=', 'ma_invoices_items.inv_id')
                 ->join('ma_flight_tickets', 'ma_invoices_items.item_id', '=', 'ma_flight_tickets.id')
@@ -111,20 +109,20 @@ class InvoiceController extends Controller
              ma_invoices_items.notes  ")->get();
 
         } else {
-            if(!session()->has('invoicesArr')){
+            if (!session()->has('invoicesArr')) {
                 return redirect()->back();
             }
-            $invoice= session('invoicesArr');
+            $invoice = session('invoicesArr');
             $invoice = json_decode(json_encode($invoice));
             $id = null;
 
         }
 
 
-        if(($invoice == collect() ) && $invoice->isEmpty()){
-            return redirect()->back()->with('error' , __('lang.not_found'));
-        } elseif(is_array($invoice)  && $id != null){
-            return redirect()->back()->with('error' , __('lang.not_found'));
+        if (($invoice == collect()) && $invoice->isEmpty()) {
+            return redirect()->back()->with('error', __('lang.not_found'));
+        } elseif (is_array($invoice) && $id != null) {
+            return redirect()->back()->with('error', __('lang.not_found'));
         }
         return view('admin/invoices/show', compact('invoice'));
 
@@ -161,6 +159,7 @@ class InvoiceController extends Controller
             ])->refresh();
 
             $flightTicketQuery->update(['invoice_id' => $invoice->id]);
+            //invoice_id if is full so the check box will not appear in the blade
 
             foreach ($tickets as $key => $item) {
                 $arr[$key]['amounts'] = (($item->price ?? 0) - (($item->discount ?? 0) + ($item->airline_com ?? 0) + ($item->additional_fees ?? 0)));
@@ -173,11 +172,11 @@ class InvoiceController extends Controller
             }
 
             $id = $invoice->id;
-            Session::forget(['invoicesArr', 'ids' ]);
+            Session::forget(['invoicesArr', 'ids']);
         }
 
 
-        if($request->list === 'invoices'){
+        if ($request->list === 'invoices') {
             return redirect(route('admin.invoices.show', $id) . '?list=invoices');
         }
         return redirect(route('admin.invoices.show', $id));
@@ -187,7 +186,7 @@ class InvoiceController extends Controller
 
     public function printAndGetData($id)
     {
-        $msg =             $invoice = DB::table('ma_invoices')
+        $msg = $invoice = DB::table('ma_invoices')
             ->join('ma_invoices_items', 'ma_invoices.id', '=', 'ma_invoices_items.inv_id')
             ->join('ma_flight_tickets', 'ma_invoices_items.item_id', '=', 'ma_flight_tickets.id')
             ->join('clients', 'ma_invoices.client_id', '=', 'clients.id')
@@ -209,13 +208,20 @@ class InvoiceController extends Controller
     }
 
 
-
     //  used in ajax for print list data
     public function getAllData()
     {
-        $invoices = Invoice::with('invoiceItems' , 'client')->latest()->get();
+        $invoices = Invoice::with('invoiceItems', 'client')->latest()->get();
         return view('admin.invoices.print', compact('invoices'));
 
+    }
+
+
+    public function destroy($id)
+    {
+        $invoice = Invoice::find($id);
+        $invoice->flightTickets;   // i want to delete the invoice id column from the flight_ticket record
+        $invoice->invoiceItems; // iwant todelete allthe invoie items
     }
 
 }

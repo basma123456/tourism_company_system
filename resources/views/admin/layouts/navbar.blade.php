@@ -63,7 +63,7 @@
                 </li>
             @endif
 
-{{--{{dd(checkModulePermission('admins', 'view'))}}--}}
+            {{--{{dd(checkModulePermission('admins', 'view'))}}--}}
 
             @if(checkModulePermission('admins', 'view'))
                 <li class="side-nav-item  @if (request()->routeIs('admin.users.*') || request()->routeIs('admin.roles.*')  || request()->routeIs('admin.give_module_to_role_show')  ) active   @endif">
@@ -151,26 +151,26 @@
 
 
 
-        @if(checkModulePermission('logs', 'view'))
-            <li class="side-nav-item">
-                <a data-bs-toggle="collapse" href="#sidebarLayouts_currencies" aria-expanded="false"
-                   aria-controls="sidebarLayouts_currencies"
-                   class="side-nav-link">
-                    <span class="menu-icon"><i class="ri-layout-2-line"></i></span>
-                    <span class="menu-text">  {{__('lang.currencies')}}  </span>
-                    <span class="menu-arrow"></span>
-                </a>
-                <div class="collapse" id="sidebarLayouts_currencies">
-                    <ul class="sub-menu">
+            @if(checkModulePermission('logs', 'view'))
+                <li class="side-nav-item">
+                    <a data-bs-toggle="collapse" href="#sidebarLayouts_currencies" aria-expanded="false"
+                       aria-controls="sidebarLayouts_currencies"
+                       class="side-nav-link">
+                        <span class="menu-icon"><i class="ri-layout-2-line"></i></span>
+                        <span class="menu-text">  {{__('lang.currencies')}}  </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="sidebarLayouts_currencies">
+                        <ul class="sub-menu">
 
 
-                        <li class="side-nav-item">
-                            <a href="{{url(route('admin.currencies.index'))}}"
-                               class="side-nav-link"> {{__('lang.show')}}  {{__('lang.currencies')}} </a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
+                            <li class="side-nav-item">
+                                <a href="{{url(route('admin.currencies.index'))}}"
+                                   class="side-nav-link"> {{__('lang.show')}}  {{__('lang.currencies')}} </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
             @endif
 
 
@@ -196,8 +196,8 @@
                         </ul>
                     </div>
                 </li>
-                @endif
-             @if(checkModulePermission('logs', 'view'))
+            @endif
+            @if(checkModulePermission('logs', 'view'))
                 <li class="side-nav-item">
                     <a data-bs-toggle="collapse" href="#sidebarLayouts_company_fields" aria-expanded="false"
                        aria-controls="sidebarLayouts_company_fields"
@@ -315,155 +315,177 @@
                 </li>
             @endif
 
+
+            @if(checkModulePermission('logs', 'view'))
+                <li class="side-nav-item">
+                    <a data-bs-toggle="collapse" href="#sidebarLayouts_invoices" aria-expanded="false"
+                       aria-controls="sidebarLayouts_invoices"
+                       class="side-nav-link">
+                        <span class="menu-icon"><i class="ri-layout-2-line"></i></span>
+                        <span class="menu-text">  {{__('lang.invoices')}}  </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="sidebarLayouts_invoices">
+                        <ul class="sub-menu">
+
+
+                            <li class="side-nav-item">
+                                <a href="{{url(route('admin.invoices.index' ))}}"
+                                   class="side-nav-link"> {{__('lang.show')}} {{__('lang.invoices')}} {{__('lang.invoices')}} </a>
+                            </li>
+
+
+                        </ul>
+                    </div>
+                </li>
+            @endif
+
         </ul>
 
-                <!--new --------------->
 
+        <!--new --------------->
 
 
         <!--- Sidenav Menu -->
         <!--old --------------->
-{{--        <ul class="side-nav">--}}
+    {{--        <ul class="side-nav">--}}
 
 
-{{--            <!------------end original nav ----------------->--}}
-{{--            <li class="side-nav-item ">--}}
-{{--                <a href="{{url(route('admin.main_dashboard.index'))}}" class="side-nav-link ">--}}
-{{--          <span class="menu-icon">--}}
-{{--            <i class="ri-line-chart-line"></i>--}}
-{{--          </span>--}}
-{{--                    <span class="menu-text">الإحصائيات </span>--}}
-{{--                </a>--}}
-{{--            </li>--}}
+    {{--            <!------------end original nav ----------------->--}}
+    {{--            <li class="side-nav-item ">--}}
+    {{--                <a href="{{url(route('admin.main_dashboard.index'))}}" class="side-nav-link ">--}}
+    {{--          <span class="menu-icon">--}}
+    {{--            <i class="ri-line-chart-line"></i>--}}
+    {{--          </span>--}}
+    {{--                    <span class="menu-text">الإحصائيات </span>--}}
+    {{--                </a>--}}
+    {{--            </li>--}}
 
 
-{{--            <li class="side-nav-item   active ">--}}
-{{--                <a href="#" class="side-nav-link ">--}}
-{{--          <span class="menu-icon">--}}
-{{--            <i class="ri-line-chart-line"></i>--}}
-{{--          </span>--}}
-{{--                    <span class="menu-text">اغلاق التسجيل في المسابقات</span>--}}
-{{--                </a>--}}
-{{--            </li>--}}
-
-
-
-{{--            @if(auth()->user()->clubid=='')--}}
-
-
-{{--                @if(checkModulePermission('settings', 'view'))--}}
-{{--                    <li class="side-nav-item ">--}}
-{{--                        <a href="{{url(route('admin.settings.edit'))}}" class="side-nav-link ">--}}
-{{--          <span class="menu-icon">--}}
-{{--            <i class="ri-settings-5-line"></i>--}}
-{{--          </span>--}}
-{{--                            <span class="menu-text"> @lang('lang.settings') </span>--}}
-{{--                        </a>--}}
-{{--                    </li> @endif--}}
-{{--                @if(checkModulePermission('weapons', 'view'))--}}
-{{--                    <li class="side-nav-item @if (request()->routeIs('weapons.*')) active @endif">--}}
-{{--                        <a href="{{ route('weapons.index') }}" class="side-nav-link">--}}
-{{--                            <span class="menu-icon"><i class="ri-sword-line"></i></span>--}}
-{{--                            <span class="menu-text">{{ __('lang.Weapons') }}</span>--}}
-{{--                        </a>--}}
-{{--                    </li> @endif--}}
-
-{{--                @if(checkModulePermission('clubs', 'view'))--}}
-{{--                    --}}{{-- Clubs --}}
-{{--                    <li class="side-nav-item @if (request()->routeIs('clubs.*')) active @endif">--}}
-{{--                        <a href="{{ route('clubs.index') }}" class="side-nav-link">--}}
-{{--                            <span class="menu-icon"><i class="ri-shield-line"></i></span>--}}
-{{--                            <span class="menu-text">{{ __('lang.Clubs') }}</span>--}}
-{{--                        </a>--}}
-{{--                    </li> @endif--}}
-
-{{--                @if(checkModulePermission('members', 'add'))--}}
-
-{{--                    --}}{{-- Personal Registration --}}
-{{--                    <li class="side-nav-item @if (request()->routeIs('personal.*')) active @endif">--}}
-{{--                        <a href="#" class="side-nav-link">--}}
-{{--                            <span class="menu-icon"><i class="ri-folder-add-line"></i></span>--}}
-{{--                            <span class="menu-text">التسجيل الفردى فى المسابقات</span>--}}
-{{--                        </a>--}}
-{{--                    </li> @endif--}}
-
-
-{{--                <li class="side-nav-title mt-2"> وحدة المسجلين</li>--}}
-{{--                @if(checkModulePermission('members', 'view'))--}}
-{{--                    --}}{{-- Personal Registered --}}
-{{--                    <li class="side-nav-item @if (request()->routeIs('personal.*')) active @endif">--}}
-{{--                        <a href="#" class="side-nav-link">--}}
-{{--                            <span class="menu-icon"><i class="ri-file-user-line"></i></span>--}}
-{{--                            <span class="menu-text">{{ __('lang.Personal') }}</span>--}}
-{{--                        </a>--}}
-{{--                    </li> @endif--}}
-
-
-{{--                @if(checkModulePermission('members_groups', 'view'))--}}
-{{--                    --}}{{-- Registered Groups --}}
-{{--                    <li class="side-nav-item @if (request()->routeIs('groups.*')) active @endif">--}}
-{{--                        <a href="#" class="side-nav-link">--}}
-{{--                            <span class="menu-icon"><i class="ri-team-line"></i></span>--}}
-{{--                            <span class="menu-text">{{ __('lang.RegisteredGroups') }}</span>--}}
-{{--                        </a>--}}
-{{--                    </li> @endif--}}
-{{--                @if(checkModulePermission('members_groups', 'rpt'))--}}
-{{--                    --}}{{-- Memebrs in Groups --}}
-{{--                    <li class="side-nav-item @if (request()->routeIs('groups.*')) active @endif">--}}
-{{--                        <a href="#" class="side-nav-link">--}}
-{{--                            <span class="menu-icon"><i class="ri-file-list-line"></i></span>--}}
-{{--                            <span class="menu-text">{{ __('lang.GroupsMembers') }}</span>--}}
-{{--                        </a>--}}
-{{--                    </li>--}}
-{{--                @endif--}}
-
-{{--                @if(checkModulePermission('intial_results', 'view'))--}}
-
-{{--                    <li class="side-nav-title mt-2"> وحدة النتائج الأولية</li>--}}
-{{--                    @if(checkModulePermission('intial_results', 'daily_rpt'))--}}
-{{--                        --}}{{-- تقارير النتائج اليومية --}}
-{{--                        <li class="side-nav-item @if (request()->routeIs('results.*')) active @endif">--}}
-{{--                            <a href="#" class="side-nav-link">--}}
-{{--                                <span class="menu-icon"><i class="ri-file-list-line"></i></span>--}}
-{{--                                التقارير اليومية للأندية--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                    @endif--}}
-{{--                    @if(checkModulePermission('intial_results', 'srch'))--}}
-{{--                        --}}{{-- search in intial results reports Search_daily_preliminary_results --}}
-{{--                        <li class="side-nav-item @if (request()->routeIs('results.*')) active @endif">--}}
-{{--                            <a href="#" class="side-nav-link">--}}
-{{--                                <span class="menu-icon"><i class="ri-menu-search-line"></i></span>--}}
-{{--                                البحث فى النتائج--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                    @endif--}}
-{{--                    @if(checkModulePermission('intial_results', 'res_list'))--}}
-{{--                        --}}{{-- list of initial results reports List of preliminary results --}}
-{{--                        <li class="side-nav-item @if (request()->routeIs('results.*')) active @endif">--}}
-{{--                            <a href="#" class="side-nav-link">--}}
-{{--                                <span class="menu-icon"><i class="ri-layout-grid-2-line"></i></span>--}}
-{{--                                قائمة النتائج الاولية--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                    @endif--}}
-{{--                    @if(checkModulePermission('intial_results', 'absents'))--}}
-{{--                        --}}{{-- الافراد المتخلفين في النتائج الاولية --}}
-{{--                        <li class="side-nav-item @if (request()->routeIs('results.*')) active @endif">--}}
-{{--                            <a href="#" class="side-nav-link">--}}
-{{--                                <span class="menu-icon"><i class="ri-user-minus-line"></i></span>--}}
-{{--                                الأفراد المتغيبين - النتائج الاولية--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                    @endif--}}
-{{--                @endif--}}
+    {{--            <li class="side-nav-item   active ">--}}
+    {{--                <a href="#" class="side-nav-link ">--}}
+    {{--          <span class="menu-icon">--}}
+    {{--            <i class="ri-line-chart-line"></i>--}}
+    {{--          </span>--}}
+    {{--                    <span class="menu-text">اغلاق التسجيل في المسابقات</span>--}}
+    {{--                </a>--}}
+    {{--            </li>--}}
 
 
 
-{{--            @endif--}}
+    {{--            @if(auth()->user()->clubid=='')--}}
+
+
+    {{--                @if(checkModulePermission('settings', 'view'))--}}
+    {{--                    <li class="side-nav-item ">--}}
+    {{--                        <a href="{{url(route('admin.settings.edit'))}}" class="side-nav-link ">--}}
+    {{--          <span class="menu-icon">--}}
+    {{--            <i class="ri-settings-5-line"></i>--}}
+    {{--          </span>--}}
+    {{--                            <span class="menu-text"> @lang('lang.settings') </span>--}}
+    {{--                        </a>--}}
+    {{--                    </li> @endif--}}
+    {{--                @if(checkModulePermission('weapons', 'view'))--}}
+    {{--                    <li class="side-nav-item @if (request()->routeIs('weapons.*')) active @endif">--}}
+    {{--                        <a href="{{ route('weapons.index') }}" class="side-nav-link">--}}
+    {{--                            <span class="menu-icon"><i class="ri-sword-line"></i></span>--}}
+    {{--                            <span class="menu-text">{{ __('lang.Weapons') }}</span>--}}
+    {{--                        </a>--}}
+    {{--                    </li> @endif--}}
+
+    {{--                @if(checkModulePermission('clubs', 'view'))--}}
+    {{--                    --}}{{-- Clubs --}}
+    {{--                    <li class="side-nav-item @if (request()->routeIs('clubs.*')) active @endif">--}}
+    {{--                        <a href="{{ route('clubs.index') }}" class="side-nav-link">--}}
+    {{--                            <span class="menu-icon"><i class="ri-shield-line"></i></span>--}}
+    {{--                            <span class="menu-text">{{ __('lang.Clubs') }}</span>--}}
+    {{--                        </a>--}}
+    {{--                    </li> @endif--}}
+
+    {{--                @if(checkModulePermission('members', 'add'))--}}
+
+    {{--                    --}}{{-- Personal Registration --}}
+    {{--                    <li class="side-nav-item @if (request()->routeIs('personal.*')) active @endif">--}}
+    {{--                        <a href="#" class="side-nav-link">--}}
+    {{--                            <span class="menu-icon"><i class="ri-folder-add-line"></i></span>--}}
+    {{--                            <span class="menu-text">التسجيل الفردى فى المسابقات</span>--}}
+    {{--                        </a>--}}
+    {{--                    </li> @endif--}}
+
+
+    {{--                <li class="side-nav-title mt-2"> وحدة المسجلين</li>--}}
+    {{--                @if(checkModulePermission('members', 'view'))--}}
+    {{--                    --}}{{-- Personal Registered --}}
+    {{--                    <li class="side-nav-item @if (request()->routeIs('personal.*')) active @endif">--}}
+    {{--                        <a href="#" class="side-nav-link">--}}
+    {{--                            <span class="menu-icon"><i class="ri-file-user-line"></i></span>--}}
+    {{--                            <span class="menu-text">{{ __('lang.Personal') }}</span>--}}
+    {{--                        </a>--}}
+    {{--                    </li> @endif--}}
+
+
+    {{--                @if(checkModulePermission('members_groups', 'view'))--}}
+    {{--                    --}}{{-- Registered Groups --}}
+    {{--                    <li class="side-nav-item @if (request()->routeIs('groups.*')) active @endif">--}}
+    {{--                        <a href="#" class="side-nav-link">--}}
+    {{--                            <span class="menu-icon"><i class="ri-team-line"></i></span>--}}
+    {{--                            <span class="menu-text">{{ __('lang.RegisteredGroups') }}</span>--}}
+    {{--                        </a>--}}
+    {{--                    </li> @endif--}}
+    {{--                @if(checkModulePermission('members_groups', 'rpt'))--}}
+    {{--                    --}}{{-- Memebrs in Groups --}}
+    {{--                    <li class="side-nav-item @if (request()->routeIs('groups.*')) active @endif">--}}
+    {{--                        <a href="#" class="side-nav-link">--}}
+    {{--                            <span class="menu-icon"><i class="ri-file-list-line"></i></span>--}}
+    {{--                            <span class="menu-text">{{ __('lang.GroupsMembers') }}</span>--}}
+    {{--                        </a>--}}
+    {{--                    </li>--}}
+    {{--                @endif--}}
+
+    {{--                @if(checkModulePermission('intial_results', 'view'))--}}
+
+    {{--                    <li class="side-nav-title mt-2"> وحدة النتائج الأولية</li>--}}
+    {{--                    @if(checkModulePermission('intial_results', 'daily_rpt'))--}}
+    {{--                        --}}{{-- تقارير النتائج اليومية --}}
+    {{--                        <li class="side-nav-item @if (request()->routeIs('results.*')) active @endif">--}}
+    {{--                            <a href="#" class="side-nav-link">--}}
+    {{--                                <span class="menu-icon"><i class="ri-file-list-line"></i></span>--}}
+    {{--                                التقارير اليومية للأندية--}}
+    {{--                            </a>--}}
+    {{--                        </li>--}}
+    {{--                    @endif--}}
+    {{--                    @if(checkModulePermission('intial_results', 'srch'))--}}
+    {{--                        --}}{{-- search in intial results reports Search_daily_preliminary_results --}}
+    {{--                        <li class="side-nav-item @if (request()->routeIs('results.*')) active @endif">--}}
+    {{--                            <a href="#" class="side-nav-link">--}}
+    {{--                                <span class="menu-icon"><i class="ri-menu-search-line"></i></span>--}}
+    {{--                                البحث فى النتائج--}}
+    {{--                            </a>--}}
+    {{--                        </li>--}}
+    {{--                    @endif--}}
+    {{--                    @if(checkModulePermission('intial_results', 'res_list'))--}}
+    {{--                        --}}{{-- list of initial results reports List of preliminary results --}}
+    {{--                        <li class="side-nav-item @if (request()->routeIs('results.*')) active @endif">--}}
+    {{--                            <a href="#" class="side-nav-link">--}}
+    {{--                                <span class="menu-icon"><i class="ri-layout-grid-2-line"></i></span>--}}
+    {{--                                قائمة النتائج الاولية--}}
+    {{--                            </a>--}}
+    {{--                        </li>--}}
+    {{--                    @endif--}}
+    {{--                    @if(checkModulePermission('intial_results', 'absents'))--}}
+    {{--                        --}}{{-- الافراد المتخلفين في النتائج الاولية --}}
+    {{--                        <li class="side-nav-item @if (request()->routeIs('results.*')) active @endif">--}}
+    {{--                            <a href="#" class="side-nav-link">--}}
+    {{--                                <span class="menu-icon"><i class="ri-user-minus-line"></i></span>--}}
+    {{--                                الأفراد المتغيبين - النتائج الاولية--}}
+    {{--                            </a>--}}
+    {{--                        </li>--}}
+    {{--                    @endif--}}
+    {{--                @endif--}}
 
 
 
+    {{--            @endif--}}
 
 
 
@@ -472,8 +494,11 @@
 
 
 
-{{--        </ul>--}}
-        <!--end old-->
+
+
+
+    {{--        </ul>--}}
+    <!--end old-->
     </div>
     </li>
 
@@ -623,7 +648,7 @@
             <!-- Notification Dropdown -->
             <div class="topbar-item">
                 <div class="dropdown">
-                 </div>
+                </div>
             </div>
             <div class="drop-down">
                 <div id="dropDown" class="drop-down__button">
@@ -680,7 +705,7 @@
         .loader {
             border: 16px solid #f3f3f3;
             border-radius: 50%;
-            border-top: 16px solid var(    --highdmin-primary);
+            border-top: 16px solid var(--highdmin-primary);
             width: 120px;
             height: 120px;
             -webkit-animation: spin 2s linear infinite; /* Safari */
@@ -695,13 +720,21 @@
 
         /* Safari */
         @-webkit-keyframes spin {
-            0% { -webkit-transform: rotate(0deg); }
-            100% { -webkit-transform: rotate(360deg); }
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
     </style>
