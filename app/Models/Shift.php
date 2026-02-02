@@ -17,4 +17,9 @@ class Shift extends Model
         'shift_date' => 'date',
         'closed' => 'boolean',
     ];
+
+    public function admin()
+    {
+        return $this->belongsTo(User::class , 'user_id');
+    }
 }

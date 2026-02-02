@@ -21,7 +21,8 @@ class ReceiptController extends Controller
     public function index(Request $request, $type)
     {
         $receipts = Receipt::with('user:id,name', 'account', 'createdBy', 'currencyRelation')->where('Rtype', $type)->latest()->paginate(config('app.pagination_num'));
-        return view('admin/receipts/index', compact('receipts', 'type'));
+        $shift = Shift::with('admin:id,name')->where(['shift_date' => now()->format('Y-m-d') , 'closed' => 0] )->first();
+        return view('admin/receipts/index', compact('receipts', 'type' , 'shift'));
     }
 
     public function show($type, $id)
@@ -119,21 +120,21 @@ class ReceiptController extends Controller
 
     public function approve($id , Request $request)
     {
-        if(openShift()) {
-
-            $receipt = Receipt::findOrFail($id);
+            $receipt = Receipt::findOrFail((int)$id);
 
             if ($request->submit == 'yes') {
-                $receipt->update(['approve' => 'yes', 'approve_note' => $request->notes]);
+                $receipt->approve = 'yes';
+                $receipt->approve_note =  $request->notes;
+                $receipt->save();
                 return redirect()->back()->with('success', __('lang.receipt_approved_successfully'));
 
             } else {
-                $receipt->update(['approve' => 'no', 'approve_note' => $request->notes]);
+                $receipt->approve = 'no';
+                $receipt->approve_note =  $request->notes;
+                $receipt->save();
                 return redirect()->back()->with('success', __('lang.receipt_disapproved_successfully'));
 
             }
-        }
-        return redirect()->back();
 
     }
 

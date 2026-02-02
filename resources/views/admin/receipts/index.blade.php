@@ -1,23 +1,51 @@
 @extends('admin.master')
-
-@section('content')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/all.min.css">
+ @section('content')
+    {{--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/all.min.css">--}}
 
     <div class="page-container my-4">
 
         {{-- Success Message --}}
         @if(session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <div class="alert alert-success alert-dismissible fade show alert_auto_dismiss" role="alert">
                 <i class="fas fa-check-circle me-2"></i>{{ session('success') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         @endif
         {{-- error Message --}}
         @if(session('error'))
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <div class="alert alert-danger alert-dismissible fade show alert_auto_dismiss" role="alert">
                 <i class="fas fa-check-circle me-2"></i>{{ session('error') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
+        @endif
+        {{-- Success Message --}}
+        @if(openShift())
+            <div class="alert alert-info fade show row" role="alert">
+
+                <div class="text-reset col-md-10  ms-auto link-offset-2">
+                    <i class="fas fa-check-circle me-2"></i> <b> {{__('lang.shift_is_opened_now') }}  </b> -
+                    ( {{ auth()->user()?->name }} ) - {{date('Y-m-d')}} - <b> {{ $shift?->name }}  </b>
+                </div>
+                <a href="{{url(route('admin.shift.close'))}}"
+                   class="col-md-2   ms-auto link-offset-2 fs-16 fw-bold text-decoration-underline">اغلاق يومية</a>
+
+            </div>
+        @else
+            <div class="alert alert-primary row  fade show  text-dark" role="alert">
+
+
+                <div class="text-reset col-md-10  ms-auto link-offset-2">
+                    <i class="fas fa-check-circle me-2  text-dark"></i> <b> {{__('lang.no_shift_now')}}   </b>
+                </div>
+
+                <a href="{{url(route('admin.shift.open'))}}"
+                   class="col-md-2 text-success  ms-auto link-offset-2 fs-16 fw-bold text-decoration-underline">فتح
+                    يومية </a>
+
+            </div>
+
+
+
         @endif
 
         <div class="col-12 d-flex flex-wrap justify-content-between align-items-center my-3">
@@ -56,10 +84,11 @@
         </div>
 
 
-        {{-- Filter Form Section --}}
-        <div class="card shadow-sm border-0 mb-4">
-            <div class="card-body">
+        {{-- Filtered Data --}}
+        <div class="card shadow-sm border-0">
 
+
+            <div class="card-header">
                 <div class="card bg-search">
 
                     <form action="#" method="get" class="card-body pb-3">
@@ -97,41 +126,13 @@
 
                 </div>
 
-
             </div>
-        </div>
-        {{--        <h2><a href="{{route('admin.receipt.show' , ['type' => $type , 'id' => 1])}}">uyuyu</a></h2>--}}
 
-        @if(openShift())
-            <h2>
-                <a href="{{url(route('admin.shift.close'))}}" class="btn btn-primary btn-sm">اغلاق يومية</a>
-            </h2>
-
-        @else
-            <h2>
-                <a href="{{url(route('admin.shift.open'))}}" class="btn btn-primary btn-sm">فتح يومية</a>
-            </h2>
-
-        @endif
-
-
-        {{-- Filtered Data --}}
-        <div class="card shadow-sm border-0">
             <div class="card-body">
 
                 <div class="card border-success mb-3 rounded-3 overflow-hidden">
 
                     <div class="card-body">
-                        {{-- Success Message --}}
-                        @if(openShift())
-                            <div class="alert alert-info fade show" role="alert">
-                                <i class="fas fa-check-circle me-2"></i>{{__('lang.shift_is_opened_now')}}
-                             </div>
-                            @else
-                            <div class="alert alert-primary   fade show text-danger" role="alert">
-                                <i class="fas fa-check-circle me-2 text-danger"></i>{{__('lang.no_shift_now')}}
-                             </div>
-                        @endif
                         @if ($errors->any())
                             <div class="alert alert-danger">
                                 <ul>
@@ -205,9 +206,9 @@
                                         @if(checkModulePermission('admins', 'view'))
                                             @if($item->approve == 'no')
                                                 <a data-bs-toggle="modal" data-bs-target="#myModal{{$item->id}}"
-                                                    title="{{__('lang.press_to_approve')}}"
-                                                    style="background-color: rgba(255,0,0,0.35) !important; color:white"
-                                                    class="btn btn-soft-success btn-icon btn-sm rounded-circle gap-1">
+                                                   title="{{__('lang.press_to_approve')}}"
+                                                   style="background-color: rgba(255,0,0,0.35) !important; color:white"
+                                                   class="btn btn-soft-success btn-icon btn-sm rounded-circle gap-1">
                                                     <i class="ri-check-fill fs-16"></i>
                                                 </a>
 
@@ -216,13 +217,16 @@
                                                 <!-- The Modal -->
                                                 <div class="modal" id="myModal{{$item->id}}">
                                                     <div class="modal-dialog">
-                                                        <form action="{{url(route('admin.approve_receipt' , $item->id))}}" method="post" class="modal-content">
-                                                            @csrf
+                                                        <form
+                                                            action="{{route('admin.approve_receipt' , $item->id)}}"
+                                                            method="post" class="modal-content">
+                                                        @csrf
 
-                                                            <!-- Modal Header -->
+                                                        <!-- Modal Header -->
                                                             <div class="modal-header">
                                                                 <h4 class="modal-title">Modal Heading</h4>
-                                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                                <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal"></button>
                                                             </div>
 
                                                             <!-- Modal body -->
@@ -230,13 +234,21 @@
                                                                 {{__('lang.are_you_sure_you_want_to_approve_this_receipt_number')}}   {{$item->id}}
                                                             </div>
 
-                                                                <div class="container">
-                                                                <textarea class="form-control" name="notes">{{$item->notes??old('notes')}}</textarea>
-                                                                </div>
+                                                            <div class="container">
+                                                                <textarea class="form-control"
+                                                                          name="notes">{{$item->approve_note ??old('notes')}}</textarea>
+                                                            </div>
                                                             <!-- Modal footer -->
                                                             <div class="modal-footer">
-                                                                <button type="submit" name="submit" value="no" class="btn btn-danger text-white"  data-bs-dismiss="modal">no</button>
-                                                                <button type="submit" name="submit" value="yes"  class="btn btn-success text-white" style="background-color: forestgreen" data-bs-dismiss="modal">Yes</button>
+                                                                <button type="submit" name="submit" value="no"
+                                                                        class="btn btn-danger text-white"
+                                                                        data-bs-dismiss="modal">no
+                                                                </button>
+                                                                <button type="submit" name="submit" value="yes"
+                                                                        class="btn btn-success text-white"
+                                                                        style="background-color: forestgreen"
+                                                                        data-bs-dismiss="modal">Yes
+                                                                </button>
 
                                                             </div>
 
@@ -246,7 +258,8 @@
                                                 <!--------end --------->
                                             @else
                                                 <a
-                                                    title="{{__('lang.approved')}}"  data-bs-toggle="modal" data-bs-target="#myModal{{$item->id}}"
+                                                    title="{{__('lang.approved')}}" data-bs-toggle="modal"
+                                                    data-bs-target="#myModal{{$item->id}}"
                                                     style="background-color: rgba(0,128,0,0.37) !important; color:white"
                                                     class="btn  btn-soft-success  btn-icon btn-sm rounded-circle gap-1 disabled:opacity-25">
                                                     <i class="ri-check-fill fs-16"></i>
@@ -262,12 +275,13 @@
                                                             <!-- Modal Header -->
                                                             <div class="modal-header">
                                                                 <h4 class="modal-title">Modal Heading</h4>
-                                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                                <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal"></button>
                                                             </div>
 
                                                             <!-- Modal body -->
                                                             <div class="modal-body text-center">
-                                                               {{__('lang.Already Approved')}}  <a
+                                                                {{__('lang.Already Approved')}} <a
                                                                     title="{{__('lang.approved')}}"
                                                                     style="background-color: rgba(0,128,0,0.37) !important; color:white"
                                                                     class="rounded-circle gap-1 disabled:opacity-25">
@@ -275,7 +289,8 @@
                                                                 </a>
 
                                                                 <div class="container">
-                                                                   <textarea disabled class="form-control"  >{{$item->notes??old('notes')}}</textarea>
+                                                                    <textarea disabled
+                                                                              class="form-control">{{$item->approve_note ??old('notes')}}</textarea>
                                                                 </div>
 
                                                             </div>
@@ -294,11 +309,13 @@
                                                                class="btn btn-soft-success btn-icon btn-sm rounded-circle gap-1"><i
                                                 class="ri-download-2-fill fs-16"></i></a>@endif
                                         @if(checkModulePermission('admins', 'edit'))
+                                            @if(openShift())
                                             <a href="{{url(route('admin.receipt.edit' , ['type' =>$type   , 'id' => $item->id]))}}"
                                                title="{{__('lang.edit')}}"
                                                class="btn btn-soft-success btn-icon btn-sm rounded-circle gap-1">
                                                 <i class="ri-edit-box-line fs-16"></i>
                                             </a>
+                                                @endif
                                         @endif
                                         @if(checkModulePermission('admins', 'view'))
                                             <a onclick="printDiv('pr_{{$item->id}}')"
@@ -336,15 +353,6 @@
             </div>
 
 
-            <!-------------------------- print for each item -->
-            @foreach($receipts as $item)
-                <div id="pr_{{$item->id}}" style="display: none  ">
-                    @include('admin/receipts/print_item' , ['receipt' => $item , 'type' => $item->Rtype->value  , 'settings' => all_settings()->getSiteSetting()])
-                </div>
-        @endforeach
-        <!-------------------------- end print for each item -->
-
-
             <div class="mt-4 d-flex justify-content-center">
                 {{count($receipts) ? $receipts->links() : ''}}
                 {{--  <!--{{ $members->appends(request()->query())->links() }}-->   --}}
@@ -356,63 +364,22 @@
             <!-----end all grid ------------->
 
         </div>
+
     </div>
+
+    <div   style="position:absolute;left:-99999px;top:-99999px;">
+        <!-------------------------- print for each item -->
+        @foreach($receipts as $item)
+            <div id="pr_{{$item->id}}" style="display: none  ">
+                @include('admin/receipts/print_item' , ['receipt' => $item , 'type' => $item->Rtype->value  , 'settings' => all_settings()->getSiteSetting()])
+            </div>
+    @endforeach
+    <!-------------------------- end print for each item -->
     </div>
-    <style>
-        .documents {
-            flex-shrink: 0;
-            /* Prevent shrinking */
-        }
-
-        .documents .btn {
-            font-size: 0.875rem;
-            font-weight: 500;
-            border-radius: 6px;
-            transition: all 0.2s ease-in-out;
-            white-space: nowrap;
-        }
-
-        .documents .btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-        }
-
-        .documents .btn i {
-            font-size: 1rem;
-        }
 
 
-        @media (max-width: 768px) {
-            .d-flex.justify-content-between.align-items-center {
-                flex-direction: column;
-                align-items: flex-start !important;
-                gap: 1rem;
-            }
-
-            .documents {
-                width: 100%;
-                justify-content: flex-end;
-            }
-
-            .documents .btn {
-                flex: 1;
-                justify-content: center;
-            }
-        }
-
-        .icon-btn {
-            background: none;
-            border: none;
-            padding: 0;
-            font-size: 1.2rem;
-            cursor: pointer;
-        }
-
-        .icon-btn:hover {
-            opacity: 0.8;
-        }
-    </style>
-
+@endsection
+@section('scripts')
     <script>
         function printDiv(divId) {
             const content = document.getElementById(divId).innerHTML;

@@ -38,3 +38,10 @@ function exportDivToExcel(divId, filename = 'report.xlsx') {
 }
 
 
+ setTimeout(() => {
+    const alert = document.querySelector('.alert_auto_dismiss');
+    if (alert) {
+        const bsAlert = new bootstrap.Alert(alert);
+        bsAlert.close();
+    }
+}, 2000);
