@@ -21,8 +21,8 @@ class ReceiptController extends Controller
     public function index(Request $request, $type)
     {
         $receipts = Receipt::with('user:id,name', 'account', 'createdBy', 'currencyRelation')->where('Rtype', $type)->latest()->paginate(config('app.pagination_num'));
-        $shift = Shift::with('admin:id,name')->where(['shift_date' => now()->format('Y-m-d') , 'closed' => 0] )->first();
-        return view('admin/receipts/index', compact('receipts', 'type' , 'shift'));
+        $shift = Shift::with('admin:id,name')->where(['shift_date' => now()->format('Y-m-d'), 'closed' => 0])->first();
+        return view('admin/receipts/index', compact('receipts', 'type', 'shift'));
     }
 
     public function show($type, $id)
@@ -118,23 +118,18 @@ class ReceiptController extends Controller
         return view('admin.receipts.print', compact('receipts', 'type'));
     }
 
-    public function approve($id , Request $request)
+    public function approve($id, Request $request)
     {
-            $receipt = Receipt::findOrFail((int)$id);
 
-            if ($request->submit == 'yes') {
-                $receipt->approve = 'yes';
-                $receipt->approve_note =  $request->notes;
-                $receipt->save();
-                return redirect()->back()->with('success', __('lang.receipt_approved_successfully'));
+        $receipt = Receipt::findOrFail($id);
+        if ($request->submit == 'yes') {
+            $receipt->update(['approve' => 'yes', 'approve_note' => $request->notes]);
+            return redirect()->back()->with('success', __('lang.receipt_approved_successfully'));
 
-            } else {
-                $receipt->approve = 'no';
-                $receipt->approve_note =  $request->notes;
-                $receipt->save();
-                return redirect()->back()->with('success', __('lang.receipt_disapproved_successfully'));
+        }
+        $receipt->update(['approve' => 'no', 'approve_note' => $request->notes]);
+        return redirect()->back()->with('success', __('lang.receipt_disapproved_successfully'));
 
-            }
 
     }
 
