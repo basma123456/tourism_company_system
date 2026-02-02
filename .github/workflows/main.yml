@@ -1,28 +1,53 @@
-# name: FTP Deploy to cPanel
+name: CI-cPanel-Deploy
 
-# on:
-#   push:
-#     branches:
-#       - main
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
 
-# jobs:
-#   ftp-deploy:
-#     runs-on: ubuntu-latest
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
 
-#     steps:
-#       - name: Checkout repository
-#         uses: actions/checkout@v4
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-#       - name: FTP Deploy
-#         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-#         with:
-#           server: ftp.smartv-demo.com
-#           username: "svdemo_remaya@remayatest.smartv-demo.com"
-#           password: "%m4xPf+6HxI."
-#           protocol: ftps
-#           port: 21
-#           security: loose
-#           local-dir: ./
-#           server-dir: /
-#           dangerous-clean-slate: false
-#           log-level: verbose
+      - name: Deploy to cPanel via FTPS
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ftp.smartv-demo.com
+          username: tourism@smartv-demo.com    # exact FTP username from cPanel
+          password: ${{ secrets.TOURISM }} # FTP password secret
+          protocol: ftps                       # explicit FTPS
+          port: 21
+          local-dir: ./
+          server-dir: /public_html/tourism_company/
+          passive: true
+          dangerous-clean-slate: false
+          exclude: |
+            *.log
+            .DS_Store
+            .env
+            .env.backup
+            .env.production
+            .phpactor.json
+            .phpunit.result.cache
+            /.fleet
+            /.idea
+            /.nova
+            /.phpunit.cache
+            /.vscode
+            /.zed
+            /auth.json
+            /node_modules
+            /public/build
+            /public/hot
+            /public/storage
+            /storage/*.key
+            /storage/pail
+            /vendor
+            Homestead.json
+            Homestead.yaml
+            Thumbs.db
+            editorconfig
