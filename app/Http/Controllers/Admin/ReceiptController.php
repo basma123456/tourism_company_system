@@ -117,12 +117,24 @@ class ReceiptController extends Controller
         return view('admin.receipts.print', compact('receipts', 'type'));
     }
 
-    public function approve($id)
+    public function approve($id , Request $request)
     {
-        $receipt = Receipt::where('id', $id)->update(['approve' => 'yes']);
-        if ($receipt) {
-            return redirect()->back()->with('success', __('lang.receipt_approved_successfully'));
+        if(openShift()) {
+
+            $receipt = Receipt::findOrFail($id);
+
+            if ($request->submit == 'yes') {
+                $receipt->update(['approve' => 'yes', 'approve_note' => $request->notes]);
+                return redirect()->back()->with('success', __('lang.receipt_approved_successfully'));
+
+            } else {
+                $receipt->update(['approve' => 'no', 'approve_note' => $request->notes]);
+                return redirect()->back()->with('success', __('lang.receipt_disapproved_successfully'));
+
+            }
         }
+        return redirect()->back();
+
     }
 
 

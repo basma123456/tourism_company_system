@@ -123,11 +123,14 @@
 
                     <div class="card-body">
                         {{-- Success Message --}}
-                        @if(session('success'))
-                            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                <i class="fas fa-check-circle me-2"></i>{{ session('success') }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                            </div>
+                        @if(openShift())
+                            <div class="alert alert-info fade show" role="alert">
+                                <i class="fas fa-check-circle me-2"></i>{{__('lang.shift_is_opened_now')}}
+                             </div>
+                            @else
+                            <div class="alert alert-primary   fade show text-danger" role="alert">
+                                <i class="fas fa-check-circle me-2 text-danger"></i>{{__('lang.no_shift_now')}}
+                             </div>
                         @endif
                         @if ($errors->any())
                             <div class="alert alert-danger">
@@ -213,7 +216,8 @@
                                                 <!-- The Modal -->
                                                 <div class="modal" id="myModal{{$item->id}}">
                                                     <div class="modal-dialog">
-                                                        <div class="modal-content">
+                                                        <form action="{{url(route('admin.approve_receipt' , $item->id))}}" method="post" class="modal-content">
+                                                            @csrf
 
                                                             <!-- Modal Header -->
                                                             <div class="modal-header">
@@ -226,14 +230,17 @@
                                                                 {{__('lang.are_you_sure_you_want_to_approve_this_receipt_number')}}   {{$item->id}}
                                                             </div>
 
+                                                                <div class="container">
+                                                                <textarea class="form-control" name="notes">{{$item->notes??old('notes')}}</textarea>
+                                                                </div>
                                                             <!-- Modal footer -->
                                                             <div class="modal-footer">
-                                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                                                                <a onclick="window.location.href='{{url(route('admin.approve_receipt' , $item->id))}}'" class="btn btn-success text-white" style="background-color: forestgreen" data-bs-dismiss="modal">Yes</a>
+                                                                <button type="submit" name="submit" value="no" class="btn btn-danger text-white"  data-bs-dismiss="modal">no</button>
+                                                                <button type="submit" name="submit" value="yes"  class="btn btn-success text-white" style="background-color: forestgreen" data-bs-dismiss="modal">Yes</button>
 
                                                             </div>
 
-                                                        </div>
+                                                        </form>
                                                     </div>
                                                 </div>
                                                 <!--------end --------->
@@ -266,6 +273,11 @@
                                                                     class="rounded-circle gap-1 disabled:opacity-25">
                                                                     <i class="ri-check-fill fs-16"></i>
                                                                 </a>
+
+                                                                <div class="container">
+                                                                   <textarea disabled class="form-control"  >{{$item->notes??old('notes')}}</textarea>
+                                                                </div>
+
                                                             </div>
 
 

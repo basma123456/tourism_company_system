@@ -69,7 +69,7 @@ Route::group([
     Route::get('receipt/edit/{type}/{id}', [ReceiptController::class, 'edit'])->name('receipt.edit');
     Route::put('receipt/update/{type}/{id}', [ReceiptController::class, 'update'])->name('receipt.update');
     Route::delete('receipt/delete/{type}/{id}', [ReceiptController::class, 'destroy'])->name('receipt.destroy');
-    Route::get('receipt_approve/{id}', [ReceiptController::class, 'approve'])->name('approve_receipt');
+    Route::post('receipt_approve/{id}', [ReceiptController::class, 'approve'])->name('approve_receipt');
 
 
 
