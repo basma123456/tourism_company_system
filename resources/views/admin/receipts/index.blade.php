@@ -309,7 +309,7 @@
                                                                class="btn btn-soft-success btn-icon btn-sm rounded-circle gap-1"><i
                                                 class="ri-download-2-fill fs-16"></i></a>@endif
                                         @if(checkModulePermission('admins', 'edit'))
-                                            @if(openShift())
+                                            @if(openShift() && $item->approve == 'no')
                                             <a href="{{url(route('admin.receipt.edit' , ['type' =>$type   , 'id' => $item->id]))}}"
                                                title="{{__('lang.edit')}}"
                                                class="btn btn-soft-success btn-icon btn-sm rounded-circle gap-1">
