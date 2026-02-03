@@ -149,6 +149,7 @@
                         <table class="table table-bordered">
                             <thead>
                             <tr>
+                                <th style="display: none"></th>
                                 <th> #</th>
                                 <th> name</th>
                                 <th>amount</th>
@@ -178,6 +179,12 @@
                             @forelse($receipts as $item)
 
                                 <tr>
+                                    <td style="display: none">
+                                        <div id="pr_{{$item->id}}" style="display: none  ">
+                                            @include('admin/receipts/print_item' , ['receipt' => $item , 'type' => $item->Rtype->value  , 'settings' => all_settings()->getSiteSetting()])
+                                        </div>
+
+                                    </td>
                                     <td>{{$item->id??'-----'}}</td>
 
                                     <td>{{$item->name??'-----'}}</td>
@@ -367,15 +374,15 @@
 
     </div>
 
-    <div   style="position:absolute;left:-99999px;top:-99999px;">
-        <!-------------------------- print for each item -->
-        @foreach($receipts as $item)
-            <div id="pr_{{$item->id}}" style="display: none  ">
-                @include('admin/receipts/print_item' , ['receipt' => $item , 'type' => $item->Rtype->value  , 'settings' => all_settings()->getSiteSetting()])
-            </div>
-    @endforeach
-    <!-------------------------- end print for each item -->
-    </div>
+{{--    <div   style="position:absolute;left:-99999px !important;top:-99999px !important;">--}}
+{{--        <!-------------------------- print for each item -->--}}
+{{--        @foreach($receipts as $item)--}}
+{{--            <div id="pr_{{$item->id}}" style="display: none  ">--}}
+{{--                @include('admin/receipts/print_item' , ['receipt' => $item , 'type' => $item->Rtype->value  , 'settings' => all_settings()->getSiteSetting()])--}}
+{{--            </div>--}}
+{{--    @endforeach--}}
+{{--    <!-------------------------- end print for each item -->--}}
+{{--    </div>--}}
 
 
 @endsection
