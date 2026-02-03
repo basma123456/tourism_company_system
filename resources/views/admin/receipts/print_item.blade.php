@@ -8,62 +8,6 @@
     $label_ar = $type === 'out' ? 'سلمنا الى الساده/ السيد' : 'أستلمنا من الساده/ السيد';
 @endphp
 
-{{--    <!DOCTYPE html>--}}
-{{--<html lang="en" dir="ltr">--}}
-{{--<head>--}}
-{{--    <meta charset="UTF-8">--}}
-{{--    <title>Receipt Print</title>--}}
-{{--    <style>--}}
-{{--        body {--}}
-{{--            font-family: 'Arial', sans-serif;--}}
-{{--            color: #000;--}}
-{{--            margin: 30px;--}}
-{{--        }--}}
-{{--        .show_print {--}}
-{{--            display: inline-block !important;--}}
-{{--        }--}}
-{{--        table {--}}
-{{--            width: 100% !important;--}}
-{{--            border-collapse: collapse;--}}
-{{--        }--}}
-{{--        @media print {--}}
-{{--            .no-print {--}}
-{{--                display: none !important;--}}
-{{--            }--}}
-{{--        }--}}
-{{--        @page { size: auto;  margin: 5mm; }--}}
-{{--    </style>--}}
-{{--</head>--}}
-{{--<body  >--}}
-
-
-{{--<style>--}}
-{{--    .watermark-text-top {--}}
-{{--        position: absolute;--}}
-{{--        top: 25%;--}}
-{{--        left: 49%;--}}
-{{--        transform: translate(-74%, -57%) rotate(-30deg);--}}
-{{--        font-size: 100px;--}}
-{{--        color: rgba(0, 0, 0, 0.03); /* Light gray transparent */--}}
-{{--        pointer-events: none; /* Prevent interaction */--}}
-{{--        white-space: nowrap;--}}
-{{--        z-index: 0;--}}
-{{--    }--}}
-{{--    .watermark-text {--}}
-{{--        position: absolute;--}}
-{{--        top: 65%;--}}
-{{--        left: 49%;--}}
-{{--        transform: translate(-74%, -57%) rotate(-30deg);--}}
-{{--        font-size: 100px;--}}
-{{--        color: rgba(0, 0, 0, 0.03); /* Light gray transparent */--}}
-{{--        pointer-events: none; /* Prevent interaction */--}}
-{{--        white-space: nowrap;--}}
-{{--        z-index: 0;--}}
-{{--    }--}}
-
-
-{{--</style>--}}
-
 @if($receipt->printed=='yes') <div class="watermark-text-top">صورة  Copy</div> @endif
 <table>
     <thead>
@@ -323,5 +267,4 @@
 </table>
 
 </div>
-{{--</body>--}}
-{{--</html>--}}
+

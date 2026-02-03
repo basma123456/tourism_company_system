@@ -220,8 +220,12 @@ class InvoiceController extends Controller
     public function destroy($id)
     {
         $invoice = Invoice::find($id);
-        $invoice->flightTickets;   // i want to delete the invoice id column from the flight_ticket record
-        $invoice->invoiceItems; // iwant todelete allthe invoie items
+        $invoice->flightTickets()->update([
+            'invoice_id' => null
+        ]);
+        $invoice->invoiceItems()->delete();
+        $invoice->delete();
+        return redirect()->back();
     }
 
 }
