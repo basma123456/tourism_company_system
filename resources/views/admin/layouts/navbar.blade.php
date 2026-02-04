@@ -340,6 +340,31 @@
                 </li>
             @endif
 
+
+            @if(checkModulePermission('logs', 'view'))
+                <li class="side-nav-item">
+                    <a data-bs-toggle="collapse" href="#sidebarLayouts_transfer" aria-expanded="false"
+                       aria-controls="sidebarLayouts_transfer"
+                       class="side-nav-link">
+                        <span class="menu-icon"><i class="ri-layout-2-line"></i></span>
+                        <span class="menu-text">  {{__('lang.transfer')}}  </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="sidebarLayouts_transfer">
+                        <ul class="sub-menu">
+
+
+                            <li class="side-nav-item">
+                                <a href="{{url(route('admin.transfer.index' ))}}"
+                                   class="side-nav-link">{{__('lang.transfer')}}</a>
+                            </li>
+
+
+                        </ul>
+                    </div>
+                </li>
+            @endif
+
         </ul>
 
 
