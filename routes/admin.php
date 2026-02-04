@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\ReceiptController;
 use App\Http\Controllers\Admin\ShiftController;
 use App\Http\Controllers\Admin\TourismFileController;
+use App\Http\Controllers\Admin\TransferController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -71,6 +72,9 @@ Route::group([
     Route::delete('receipt/delete/{type}/{id}', [ReceiptController::class, 'destroy'])->name('receipt.destroy');
     Route::post('receipt_approve/{id}', [ReceiptController::class, 'approve'])->name('approve_receipt');
 
+    Route::get('transfer', [TransferController::class, 'index'])->name('transfer.index');
+    Route::post('transfer/{id}', [TransferController::class, 'transfer'])->name('transfer.change');
+    Route::post('transfer_all', [TransferController::class, 'getAllData']); //print all receipts
 
 
     Route::get('open_shift', [ShiftController::class, 'openShiftFunc'])->name('shift.open');

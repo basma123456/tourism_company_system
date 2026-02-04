@@ -293,7 +293,7 @@
                        aria-controls="sidebarLayouts_receipts"
                        class="side-nav-link">
                         <span class="menu-icon"><i class="ri-layout-2-line"></i></span>
-                        <span class="menu-text">  {{__('lang.receipts')}}  </span>
+                        <span class="menu-text">  {{__('lang.safe')}}  </span>
                         <span class="menu-arrow"></span>
                     </a>
                     <div class="collapse" id="sidebarLayouts_receipts">

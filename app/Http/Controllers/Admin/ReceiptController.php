@@ -114,7 +114,7 @@ class ReceiptController extends Controller
     //  used in ajax for print list data
     public function getAllData($type)
     {
-        $receipts = Receipt::with('user:id,name', 'account', 'createdBy', 'currencyRelation')->where('Rtype', $type)->latest()->paginate(config('app.pagination_num'));
+        $receipts = Receipt::with('user:id,name', 'account', 'createdBy', 'currencyRelation')->where('Rtype', $type)->latest()->get();
         return view('admin.receipts.print', compact('receipts', 'type'));
     }
 

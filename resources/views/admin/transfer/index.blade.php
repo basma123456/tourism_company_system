@@ -1,5 +1,5 @@
 @extends('admin.master')
- @section('content')
+@section('content')
     {{--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/all.min.css">--}}
 
     <div class="page-container my-4">
@@ -50,22 +50,17 @@
 
         <div class="col-12 d-flex flex-wrap justify-content-between align-items-center my-3">
             <div class="col-12 col-md-8 mb-2 mb-md-0">
-                <h4 class="header-title">{{__('lang.receipts') . " " .__('lang.receipt_' . $type)}}</h4>
+                <h4 class="header-title">{{__('lang.transfer')  }}</h4>
             </div>
             <div class="col-12 col-md-4 text-md-end text-center">
 
 
                 <div class="">
-                    @if(openShift())
-                        <a class="badge badge-outline-primary"
-                           href="{{url(route('admin.receipt.create' , ['type' =>$type]))}}">
-                            {{__('lang.add_new')}} </a>
-                    @endif
 
 
                     {{--/**********excel btn**********/--}}
                     <span title="اكسيل"
-                          onclick="getDataExcel('{{url('/admin/receipts_all/' . $type)}}' , 'receipts.xlsx')"
+                          onclick="getDataExcel('{{url('/admin/transfer_all' )}}' , 'receipts_need_to_transfers.xlsx')"
                           target="_blank"
                           class="btn btn-sm btn-success  ">
                         <i class="ri-file-excel-line"></i>
@@ -73,10 +68,10 @@
 
                     {{--/*********excel brn**********/--}}
 
-                    <span title="طباعة" onclick="getDataPrint('{{url('/admin/receipts_all/' . $type)}}' )"
+                    <span title="طباعة" onclick="getDataPrint('{{url('/admin/transfer_all' )}}' )"
                           class="btn btn-sm btn-danger  ">
                             <i class="ri-printer-line"></i>
-                        </span>
+                    </span>
 
                 </div>
 
@@ -110,7 +105,7 @@
                                     <button type="submit" class="btn btn-success">
                                         <i class="ri-search-line me-1"></i>بحث
                                     </button>
-                                    <a href="{{url(route('admin.receipt.index' , ['type' => $type]))}}"
+                                    <a href=""
                                        class="btn btn-primary"> <i class="ri-arrow-go-back-line me-1"></i>إعادة تعيين
                                     </a>
 
@@ -159,16 +154,6 @@
                                 <th>{{__('lang.Rcreated_date')}}</th>
                                 <th>{{('lang.by_id')}}</th>
 
-
-                                {{--                                <th>Rtype</th>--}}
-                                {{--                                <th>currency</th>--}}
-                                {{--                                <th>pay_type</th>--}}
-                                {{--                                <th>pay_file</th>--}}
-                                {{--                                <th>acc_detail_type</th>--}}
-                                {{--                                <th> approve</th>--}}
-                                {{--                                <th>printed</th>--}}
-                                {{--                                <th>posted</th>--}}
-
                                 <th> التحكم</th>
 
                             </tr>
@@ -210,120 +195,12 @@
 
 
                                     <td class="td_actions">
-                                        @if(checkModulePermission('admins', 'view'))
-                                            @if($item->approve == 'no')
-                                                <a data-bs-toggle="modal" data-bs-target="#myModal{{$item->id}}"
-                                                   title="{{__('lang.press_to_approve')}}"
-                                                   style="background-color: rgba(255,0,0,0.35) !important; color:white"
-                                                   class="btn btn-soft-success btn-icon btn-sm rounded-circle gap-1">
-                                                    <i class="ri-check-fill fs-16"></i>
-                                                </a>
 
-                                                <!-------start ----------->
-
-                                                <!-- The Modal -->
-                                                <div class="modal" id="myModal{{$item->id}}">
-                                                    <div class="modal-dialog">
-                                                        <form
-                                                            action="{{route('admin.approve_receipt' , $item->id)}}"
-                                                            method="post" class="modal-content">
-                                                        @csrf
-
-                                                        <!-- Modal Header -->
-                                                            <div class="modal-header">
-                                                                <h4 class="modal-title">Modal Heading</h4>
-                                                                <button type="button" class="btn-close"
-                                                                        data-bs-dismiss="modal"></button>
-                                                            </div>
-
-                                                            <!-- Modal body -->
-                                                            <div class="modal-body text-center">
-                                                                {{__('lang.are_you_sure_you_want_to_approve_this_receipt_number')}}   {{$item->id}}
-                                                            </div>
-
-                                                            <div class="container">
-                                                                <textarea class="form-control"
-                                                                          name="notes">{{$item->approve_note ??old('notes')}}</textarea>
-                                                            </div>
-                                                            <!-- Modal footer -->
-                                                            <div class="modal-footer">
-                                                                <button type="submit" name="submit" value="no"
-                                                                        class="btn btn-danger text-white"
-                                                                        data-bs-dismiss="modal">{{__('lang.no')}}
-                                                                </button>
-                                                                <button type="submit" name="submit" value="yes"
-                                                                        class="btn btn-success text-white"
-                                                                        style="background-color: forestgreen"
-                                                                        data-bs-dismiss="modal">{{__('lang.yes')}}
-                                                                </button>
-
-                                                            </div>
-
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                                <!--------end --------->
-                                            @else
-                                                <a
-                                                    title="{{__('lang.approved')}}" data-bs-toggle="modal"
-                                                    data-bs-target="#myModal{{$item->id}}"
-                                                    style="background-color: rgba(0,128,0,0.37) !important; color:white"
-                                                    class="btn  btn-soft-success  btn-icon btn-sm rounded-circle gap-1 disabled:opacity-25">
-                                                    <i class="ri-check-fill fs-16"></i>
-                                                </a>
-
-                                                <!-------start ----------->
-
-                                                <!-- The Modal -->
-                                                <div class="modal" id="myModal{{$item->id}}">
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content">
-
-                                                            <!-- Modal Header -->
-                                                            <div class="modal-header">
-                                                                <h4 class="modal-title">Modal Heading</h4>
-                                                                <button type="button" class="btn-close"
-                                                                        data-bs-dismiss="modal"></button>
-                                                            </div>
-
-                                                            <!-- Modal body -->
-                                                            <div class="modal-body text-center">
-                                                                {{__('lang.Already Approved')}} <a
-                                                                    title="{{__('lang.approved')}}"
-                                                                    style="background-color: rgba(0,128,0,0.37) !important; color:white"
-                                                                    class="rounded-circle gap-1 disabled:opacity-25">
-                                                                    <i class="ri-check-fill fs-16"></i>
-                                                                </a>
-
-                                                                <div class="container">
-                                                                    <textarea disabled
-                                                                              class="form-control">{{$item->approve_note ??old('notes')}}</textarea>
-                                                                </div>
-
-                                                            </div>
-
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!--------end --------->
-
-                                            @endif
-                                        @endif
 
                                         @if($item->pay_file)<a download href="{{asset($item->pay_file)}}"
                                                                title="{{__('lang.download_attachment')}}"
                                                                class="btn btn-soft-success btn-icon btn-sm rounded-circle gap-1"><i
-                                                    class="ri-attachment-line fs-16"></i></a>@endif
-                                        @if(checkModulePermission('admins', 'edit'))
-                                            @if(openShift() && $item->approve == 'no')
-                                            <a href="{{url(route('admin.receipt.edit' , ['type' =>$type   , 'id' => $item->id]))}}"
-                                               title="{{__('lang.edit')}}"
-                                               class="btn btn-soft-success btn-icon btn-sm rounded-circle gap-1">
-                                                <i class="ri-edit-box-line fs-16"></i>
-                                            </a>
-                                                @endif
-                                        @endif
+                                                class="ri-attachment-line fs-16"></i></a>@endif
                                         @if(checkModulePermission('admins', 'view'))
                                             <a onclick="printDiv('pr_{{$item->id}}')"
                                                title="{{__('lang.print')}}"
@@ -334,19 +211,16 @@
 
                                         @if(checkModulePermission('admins', 'delete'))
                                             <form
-                                                action="{{route('admin.receipt.destroy' , ['type' =>$type   , 'id' => $item])}}"
-                                                method="post"
-                                            >
+                                                action="{{route('admin.transfer.change' , $item->id)}}"
+                                                method="post">
                                                 @csrf
-                                                @method('DELETE')
-                                                <div title="{{__('lang.delete')}}"
+                                                <div title="{{__('lang.transfer')}}"
                                                      class="btn btn-soft-success btn-icon btn-sm rounded-circle  gap-1"
-                                                     onclick="confirmDeletion(this)"><i
-                                                        class="ri-delete-bin-line fs-16"></i></div>
-
+                                                     onclick="confirmSubmit(this)"><i
+                                                        class="ri-share-forward-fill fs-16"></i></div>
                                             </form>
-                                        @endif </td>
-
+                                        @endif
+                                    </td>
 
 
                                 </tr>
@@ -368,7 +242,7 @@
             </div>
             <!---------------------start print all grid ------------>
             <div id="pr" style="display: none">
-                @include('admin.receipts.print', ['receipts'=>@$receipts])
+                @include('admin.transfer.print', ['receipts'=>@$receipts])
             </div>
             <!-----end all grid ------------->
 
@@ -376,15 +250,15 @@
 
     </div>
 
-{{--    <div   style="position:absolute;left:-99999px !important;top:-99999px !important;">--}}
-{{--        <!-------------------------- print for each item -->--}}
-{{--        @foreach($receipts as $item)--}}
-{{--            <div id="pr_{{$item->id}}" style="display: none  ">--}}
-{{--                @include('admin/receipts/print_item' , ['receipt' => $item , 'type' => $item->Rtype->value  , 'settings' => all_settings()->getSiteSetting()])--}}
-{{--            </div>--}}
-{{--    @endforeach--}}
-{{--    <!-------------------------- end print for each item -->--}}
-{{--    </div>--}}
+    {{--    <div   style="position:absolute;left:-99999px !important;top:-99999px !important;">--}}
+    {{--        <!-------------------------- print for each item -->--}}
+    {{--        @foreach($receipts as $item)--}}
+    {{--            <div id="pr_{{$item->id}}" style="display: none  ">--}}
+    {{--                @include('admin/receipts/print_item' , ['receipt' => $item , 'type' => $item->Rtype->value  , 'settings' => all_settings()->getSiteSetting()])--}}
+    {{--            </div>--}}
+    {{--    @endforeach--}}
+    {{--    <!-------------------------- end print for each item -->--}}
+    {{--    </div>--}}
 
 
 @endsection
@@ -403,9 +277,9 @@
         }
 
 
-        function confirmDeletion(obj) {
+        function confirmSubmit(obj) {
             const form = obj.parentNode;
-            if (!confirm('Are you sure you want to delete this item?')) {
+            if (!confirm('Are you sure you want to transfer this item?')) {
                 return;
             }
 

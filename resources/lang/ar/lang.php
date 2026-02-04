@@ -377,6 +377,7 @@ return [
     'Rcreated_date' => 'تاريخ الصنع',
     'acc_details_id' => 'تفاصيل الحساب',
     'notes' => 'الملاحظات',
+    'safe' => 'الخزينة',
 
 
 

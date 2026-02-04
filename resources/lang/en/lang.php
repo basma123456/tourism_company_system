@@ -367,6 +367,7 @@ return [
     'acc_details_id' => 'Account Details',
     'notes' => 'Notes',
     'Rcreated_date' => 'Date Of Creation',
+    'safe' => 'Safe',
 
 
 
