@@ -331,7 +331,7 @@
 
                             <li class="side-nav-item">
                                 <a href="{{url(route('admin.invoices.index' ))}}"
-                                   class="side-nav-link"> {{__('lang.show')}} {{__('lang.invoices')}} {{__('lang.invoices')}} </a>
+                                   class="side-nav-link">{{__('lang.show')}} {{__('lang.invoices')}}</a>
                             </li>
 
 

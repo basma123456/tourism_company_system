@@ -151,13 +151,13 @@
                             <tr>
                                 <th style="display: none"></th>
                                 <th> #</th>
-                                <th> name</th>
-                                <th>amount</th>
-                                <th>acc_id</th>
-                                <th>acc_details_id</th>
-                                <th>notes</th>
-                                <th>Rcreated_date</th>
-                                <th>by_id</th>
+                                <th> {{__('lang.name')}}</th>
+                                <th>{{__('lang.amount')}}</th>
+                                <th>{{__('lang.acc_id')}}</th>
+                                <th>{{__('lang.acc_details_id')}}</th>
+                                <th>{{__('lang.notes')}}</th>
+                                <th>{{__('lang.Rcreated_date')}}</th>
+                                <th>{{('lang.by_id')}}</th>
 
 
                                 {{--                                <th>Rtype</th>--}}

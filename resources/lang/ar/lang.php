@@ -366,6 +366,20 @@ return [
     'receipt_in' => 'قبض',
     'receipt_out' => 'دفع',
     'receipts' => 'ايصالات',
+    'invoices' => 'فواتير',
+    'no_shift_now'=>   'لا توجد يومية مفتوحة الآن، يمكنك الضغط على زر فتح اليومية لتتمكن من تعديل الخدمات وإجراء المعاملات الأخرى بسهولة',
+    'shift_is_opened_now' => 'اليومية الحالية',
+    'name' => 'invoices',
+    'invoices2' => 'invoices',
+    'amount' => 'invoices',
+    'acc_id' => 'invoices',
+    'acc_details_id' => 'invoices',
+    'notes' => 'invoices',
+    'Rcreated_date' => 'invoices',
+    'acc_details_id' => 'invoices',
+    'notes' => 'invoices',
+    'Rcreated_date' => 'invoices',
+
 
 
 ];

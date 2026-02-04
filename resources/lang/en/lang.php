@@ -348,6 +348,27 @@ return [
     'receipt_in' => 'Received',
     'receipt_out' => 'Payment',
     'receipts' => 'Receipts',
+    'invoices' => 'invoices',
+    'no_shift_now' => 'No shift opened now , you can press button  of open shift to can make edits serve and other transactions flexibility',
+    'shift_is_opened_now' => 'Current Shift',
+
+    'amount' => 'Amount',
+    'acc_id' => 'Account',
+    'acc_details_id' => 'Account Details',
+    'notes' => 'Notes',
+    'Rcreated_date' => 'Created Date',
+
+    'name' => 'Name',
+    'invoices2' => 'invoices',
+    'invoices2' => 'invoices',
+
+    'amount' => 'invoices',
+    'acc_id' => 'invoices',
+    'acc_details_id' => 'invoices',
+    'notes' => 'invoices',
+    'Rcreated_date' => 'invoices',
+    'acc_details_id' => 'invoices',
+    'notes' => 'invoices',
 
 
 

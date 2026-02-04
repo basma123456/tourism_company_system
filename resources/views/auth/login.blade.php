@@ -31,10 +31,17 @@
 {{-- {{ __('Log in') }}--}} {{-- </x-primary-button>--}}
 {{-- </div>--}}
 {{-- </form>--}}
-{{-- </x-guest-layout>--}} 
+{{-- </x-guest-layout>--}}
 @extends('auth.master') @php $settings = \App\Models\SiteSettings::first(); // dd($settings); @endphp @section('content')
 <style>
-  html,
+    /*input{*/
+    /*    user-select: text !important;*/
+    /*    -webkit-user-select: text !important;*/
+    /*    -moz-user-select: text !important;*/
+    /*    -ms-user-select: text !important;*/
+    /*}*/
+
+   html,
   body {
     overflow-x: hidden;
   }
@@ -42,11 +49,11 @@
   body {
   background-color: #f3f6f8;
   background-image:url({{ asset('admin/assets/images/bg-login.jpg') }});
-  background-size: cover;    
-  background-repeat: no-repeat; 
-  background-position: center;  
-  height: 100vh;               
-  margin: 0;                   
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 100vh;
+  margin: 0;
   }
 
   ::-webkit-scrollbar {
@@ -76,7 +83,10 @@
     background: transparent;
     color: inherit;
   }
-
+    input::selection {
+        background: white;
+        color: red;
+    }
   .line-text {
     position: relative;
     text-align: center;
@@ -503,7 +513,7 @@
         <div class="basic-container">
           <input type="checkbox" id="remember_me" value="yes" name="remember">
           <label  for="remember_me">Remember me</label>
-        </div> @if (Route::has('password.request')) 
+        </div> @if (Route::has('password.request'))
         <!--<a href="{{ route('password.request') }}">
           {{ __('Forgot your password?') }}
         </a> -->
