@@ -362,13 +362,11 @@ return [
     'invoices2' => 'invoices',
     'invoices2' => 'invoices',
 
-    'amount' => 'invoices',
-    'acc_id' => 'invoices',
-    'acc_details_id' => 'invoices',
-    'notes' => 'invoices',
-    'Rcreated_date' => 'invoices',
-    'acc_details_id' => 'invoices',
-    'notes' => 'invoices',
+    'amount' => 'Amount',
+    'acc_id' => 'Account',
+    'acc_details_id' => 'Account Details',
+    'notes' => 'Notes',
+    'Rcreated_date' => 'Date Of Creation',
 
 
 
