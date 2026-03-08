@@ -1,7 +1,7 @@
 <?php
 
-
 use App\Models\Shift;
+use App\Service\ShiftServiceSingleton;
 
 //if (!function_exists('checkCurrentShift')) {
 //    //check if today has shifts or no to add to its count plus one
@@ -26,7 +26,8 @@ if (!function_exists('openShift')) {
     // and this case  if we want to create another shift
     function openShift()
     {
-        return  Shift::where(['shift_date' => now()->format('Y-m-d') , 'closed' => 0])->exists();
+//        return  Shift::where(['shift_date' => now()->format('Y-m-d') , 'closed' => 0])->exists();
+        return \App\Http\Settings\ShiftSingleton::getInstance()->getShiftOpenExists();
     }
 }
 

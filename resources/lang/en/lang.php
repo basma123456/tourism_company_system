@@ -368,6 +368,8 @@ return [
     'notes' => 'Notes',
     'Rcreated_date' => 'Date Of Creation',
     'safe' => 'Safe',
+    'by_id' => 'Added By',
+    'transfer' => 'Transfer',
 
 
 

@@ -60,7 +60,7 @@
 
                     {{--/**********excel btn**********/--}}
                     <span title="اكسيل"
-                          onclick="getDataExcel('{{url('/admin/transfer_all' )}}' , 'receipts_need_to_transfers.xlsx')"
+                          onclick="getDataExcel('{{url('/admin/transfer_all' )}}' , 'receipts_need_to_transfer.xlsx')"
                           target="_blank"
                           class="btn btn-sm btn-success  ">
                         <i class="ri-file-excel-line"></i>
@@ -95,7 +95,7 @@
                             {{-- Search Input --}}
                             <div class="col-md-3">
                                 <input class="form-control" type="text" name="search"
-                                       placeholder="الاسم / الكود / اارمز" value="{{request()->get('search')}}">
+                                       placeholder="الاسم / المبلغ / الحساب/ اضيف بواسطة " value="{{request()->get('search')}}">
                             </div>
 
 
@@ -152,7 +152,7 @@
                                 <th>{{__('lang.acc_details_id')}}</th>
                                 <th>{{__('lang.notes')}}</th>
                                 <th>{{__('lang.Rcreated_date')}}</th>
-                                <th>{{('lang.by_id')}}</th>
+                                <th>{{__('lang.by_id')}}</th>
 
                                 <th> التحكم</th>
 
